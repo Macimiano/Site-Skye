@@ -1,6 +1,6 @@
 # Skye Gestão e Inovação — Site institucional (Vercel)
 
-Versão atualizada com galeria de **7 prints reais** (sem o vídeo) e tema claro/escuro.
+Versão **3.0**, com galeria de **7 prints reais** (sem o vídeo), tema claro/escuro e revisão de conteúdo e layout.
 
 ## Publicar na Vercel
 
@@ -35,3 +35,11 @@ WhatsApp no `config.js`: **5519998491844**. Para trocá-lo posteriormente, alter
 ## Observação comercial
 
 O site é institucional e não exige compra de domínio para funcionar em um endereço `*.vercel.app`. O plano Hobby da Vercel é restrito a atividades pessoais e não comerciais; verifique o plano adequado para um site empresarial.
+
+
+## Versão 3.0 — aprimoramentos visuais
+- Textos comerciais revisados com situações reais, sem promessas de resultados garantidos.
+- Seção de visita em Socorro e região com etapas de consultoria e composição editorial de telas reais.
+- Galeria hierarquizada com dois destaques e agrupamento responsivo, sem divulgar o nome SPM.
+- Contraste reforçado nos temas automático, claro e escuro.
+- Para atualizar um site já publicado, faça o deploy **no mesmo projeto** da Vercel (via GitHub integrado ou Vercel CLI), e não crie outro projeto no Drop.

@@ -150,6 +150,7 @@
     filters.forEach(b=>{const yes=b.dataset.filter===category;b.classList.toggle('is-selected',yes);b.setAttribute('aria-pressed',String(yes));});
     cards.forEach(card=>{card.hidden=category!=='todos'&&card.dataset.category!==category;});
     visibleCards=cards.filter(c=>!c.hidden);
+    document.getElementById('showcase-grid')?.setAttribute('data-active-category',category);
   }
   filters.forEach(b=>b.addEventListener('click',()=>filterBy(b.dataset.filter)));
   function show(index){
