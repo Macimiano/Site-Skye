@@ -1,61 +1,37 @@
-# Skye Gestão e Inovação — site institucional v1.1
+# Skye Gestão e Inovação — Site institucional (Vercel)
 
-Site institucional responsivo para a Skye Gestão e Inovação, voltado à comercialização de sistemas de gestão sob medida. O pacote contém HTML, CSS e JavaScript, as imagens originais do logotipo, a apresentação em vídeo otimizada e um servidor Node.js mínimo para publicação no Railway. **Não requer banco de dados.**
+Versão atualizada com galeria de **7 prints reais** (sem o vídeo) e tema claro/escuro.
 
-## Destaques desta atualização
+## Publicar na Vercel
 
-- Comparativo **Como está hoje / Com a Skye** (possibilidades, sem promessas de resultados quantificados).
-- Consultoria inicial para entender processos e reais necessidades do cliente.
-- Três etapas comerciais, da conversa até o sistema em funcionamento, sem alegar serviços fiscais ou emissão de documentos.
-- **Visita presencial agendada para negócios de Socorro (SP) e região**, mediante disponibilidade.
-- Demonstração em vídeo de 22 segundos de uma interface de sistema, fornecida pelo usuário, **sem autoplay**.
-- Contato pelo WhatsApp comercial **(19) 99849-1844** e opção de solicitar visita no formulário.
+**Para não perder o endereço atual:** atualize o **mesmo projeto** existente na Vercel. Caso esteja conectado ao GitHub, copie os arquivos da pasta para a raiz do repositório e faça um commit; o deploy é automático.
 
-## Arquivos
+Caso a publicação original tenha sido pelo Vercel Drop e não haja GitHub conectado, é possível usar a Vercel CLI no diretório do site: `npx vercel link` (selecionando o projeto existente) e depois `npx vercel --prod`. Verifique que o projeto selecionado é o já publicado. Um novo envio no Drop pode criar outro projeto.
 
-- `index.html`: página inicial, incluindo vídeo e novas seções.
-- `styles.css`, `script.js`, `config.js`: visual, formulário e contatos.
-- `privacidade.html`: informações básicas de privacidade, sujeitas a revisão.
-- `assets/`: imagens originais fornecidas, favicon e `video/demonstracao-dormunt.mp4` (versão reduzida, sem áudio) com poster.
-- `server.cjs` + `package.json`: servidor estático Node.js sem dependências para Railway.
-- `railway.json`: configuração de deploy Railway.
+A estrutura é estática: `index.html`, `styles.css`, `script.js`, `config.js`, `privacidade.html` e `assets/` (com as subpastas). Não suba apenas o ZIP como arquivo dentro de outro diretório.
 
-## Publicação no Railway (sem domínio próprio)
+## Alterações
 
-1. Extraia este ZIP em uma pasta local. **O arquivo `index.html` deve ficar na raiz do repositório.**
-2. Crie um repositório no GitHub, por exemplo `skye-site`, e envie os arquivos extraídos para ele. Pode ser repositório privado.
-3. Entre no [Railway Dashboard](https://railway.com/dashboard), escolha **New Project → Deploy from GitHub repo** e selecione o repositório `skye-site`.
-4. O Railway detectará `package.json` e iniciará `npm start`, usando a porta `PORT` fornecida pelo serviço.
-5. Após concluir, use **Settings → Networking → Generate Domain** para receber um endereço `*.up.railway.app`.
-6. Abra o site e teste navegação, reprodução do vídeo, botões, formulário e WhatsApp em computador e celular.
-7. Futuramente, ao comprar o domínio, vincule-o em **Settings → Networking → Custom Domain** e configure os registros DNS indicados pelo Railway.
+- Hero e seção de personalização com prints reais.
+- Galeria com filtros por tema e ampliação de imagens (sem vídeo).
+- Nome Corte Certo público; imagem de equipe comercial foi **recortada** para remover totalmente a marca SPM e o breadcrumb que a mencionava.
+- Prints com informações desnecessárias de clientes / endereços de desenvolvimento foram recortados.
+- Tema automático conforme preferência do sistema (`prefers-color-scheme`) e alternância manual opcional pelo ícone no menu. A escolha manual fica salva localmente.
+- Revisão de textos comerciais com linguagem direta.
+- Formulário prepara mensagem de WhatsApp; sem banco de dados de mensagens no site.
 
-A hospedagem usa recursos do seu plano Railway e poderá aumentar o consumo faturado. O site só será público após o deploy.
+## Contato
 
-## Outros provedores
+WhatsApp no `config.js`: **5519998491844**. Para trocá-lo posteriormente, altere o valor `whatsapp`.
 
-Como o site em si é estático, `index.html`, `styles.css`, `script.js`, `config.js`, `privacidade.html` e `assets/` também podem ser publicados em Cloudflare Pages ou em uma hospedagem de sites estáticos. Nesses casos, `server.cjs` e `package.json` não são necessários.
+## Verificações sugeridas após o deploy
 
-## Como testar localmente
+1. Abrir no desktop e no celular.
+2. Verificar modo claro e escuro; o botão alterna Automático → Claro → Escuro.
+3. Abrir galeria, filtrar projetos, ampliar prints e voltar ao fechar.
+4. Testar WhatsApp e formulário.
+5. Revisar a política de privacidade e as permissões de uso das imagens.
 
-Com Node.js instalado, dentro da pasta:
+## Observação comercial
 
-```sh
-npm start
-```
-
-Acesse `http://localhost:3000`.
-
-## Contato e informações comerciais
-
-WhatsApp da Skye configurado em `config.js`: `5519998491844`. O botão de visita abre uma mensagem pré-preenchida pedindo agendamento. O formulário não guarda dados em servidor: prepara a mensagem, que o usuário deve confirmar e enviar no WhatsApp.
-
-## Revisões antes da publicação pública
-
-1. **Confirme que você tem autorização para exibir o nome, o conteúdo e as interfaces do cliente/projeto "Dormunt Arena" no vídeo.** O vídeo foi fornecido pelo usuário e não passou por revisão jurídica de privacidade ou direitos de terceiros.
-2. Verifique se nenhuma informação pessoal ou comercial confidencial aparece no vídeo.
-3. Revise a política de privacidade e dados de contato.
-4. Teste a reprodução em celulares e se as opções de visita estão claras.
-5. As melhorias citadas na seção antes/depois são possibilidades condicionadas ao escopo; não representam promessas de aumento de lucros ou métricas reais.
-
-O vídeo longo "Apresentação Said" **não foi incluído** no site, pois é mais apropriado para demonstrações detalhadas individuais.
+O site é institucional e não exige compra de domínio para funcionar em um endereço `*.vercel.app`. O plano Hobby da Vercel é restrito a atividades pessoais e não comerciais; verifique o plano adequado para um site empresarial.

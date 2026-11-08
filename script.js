@@ -117,3 +117,63 @@
     }
   });
 })();
+
+
+// Skye v2: projeto real, galeria acessível e tema automático.
+(() => {
+  const root = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+  const themeLabel = toggle && toggle.querySelector('.theme-label');
+  let theme = 'auto';
+  try {const saved = localStorage.getItem('skye-theme');if (['auto','light','dark'].includes(saved)) theme=saved;} catch(_){ /* Navegador pode bloquear armazenamento. */ }
+  const themeNames = {auto:'Automático',light:'Claro',dark:'Escuro'};
+  function updateTheme(){
+    root.setAttribute('data-theme',theme);
+    if (toggle) {toggle.setAttribute('aria-label','Tema: '+themeNames[theme]+'. Clique para alternar.');toggle.title='Tema: '+themeNames[theme];}
+    if (themeLabel) themeLabel.textContent=themeNames[theme];
+  }
+  updateTheme();
+  if (toggle) toggle.addEventListener('click',()=>{theme=({auto:'light',light:'dark',dark:'auto'})[theme];try{localStorage.setItem('skye-theme',theme);}catch(_){}updateTheme();});
+
+  const cards = [...document.querySelectorAll('.showcase-card')];
+  const filters = [...document.querySelectorAll('.gallery-filter')];
+  const dialog = document.getElementById('gallery-dialog');
+  const enlarged = document.getElementById('gallery-dialog-image');
+  const title = document.getElementById('gallery-dialog-label');
+  const caption = document.getElementById('gallery-dialog-caption');
+  const counter = document.getElementById('gallery-count');
+  const closeButton = document.getElementById('gallery-close');
+  let visibleCards=cards;
+  let selected=0;
+  let previousFocus=null;
+  function filterBy(category){
+    filters.forEach(b=>{const yes=b.dataset.filter===category;b.classList.toggle('is-selected',yes);b.setAttribute('aria-pressed',String(yes));});
+    cards.forEach(card=>{card.hidden=category!=='todos'&&card.dataset.category!==category;});
+    visibleCards=cards.filter(c=>!c.hidden);
+  }
+  filters.forEach(b=>b.addEventListener('click',()=>filterBy(b.dataset.filter)));
+  function show(index){
+    if (!visibleCards.length) return;
+    selected=(index+visibleCards.length)%visibleCards.length;
+    const card=visibleCards[selected], img=card.querySelector('.showcase-image img');
+    enlarged.src=img.getAttribute('src');
+    enlarged.alt=img.alt;
+    const heading=card.querySelector('.showcase-caption strong');
+    title.textContent=(card.querySelector('.showcase-kicker')?.textContent||'Projeto Skye')+' · '+(heading?.textContent||'');
+    caption.textContent=card.querySelector('.showcase-description')?.textContent||'';
+    counter.textContent=`${selected+1} de ${visibleCards.length}`;
+  }
+  cards.forEach(card=>card.addEventListener('click',()=>{
+    if (!dialog || !dialog.showModal) return;
+    previousFocus=document.activeElement;
+    show(visibleCards.indexOf(card));
+    dialog.showModal();
+    closeButton?.focus();
+  }));
+  document.getElementById('gallery-prev')?.addEventListener('click',()=>show(selected-1));
+  document.getElementById('gallery-next')?.addEventListener('click',()=>show(selected+1));
+  closeButton?.addEventListener('click',()=>dialog.close());
+  dialog?.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+  dialog?.addEventListener('close',()=>previousFocus?.focus());
+  document.addEventListener('keydown',e=>{if (!dialog?.open)return;if(e.key==='ArrowRight')show(selected+1);if(e.key==='ArrowLeft')show(selected-1);});
+})();
