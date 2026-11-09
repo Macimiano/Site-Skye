@@ -1,45 +1,55 @@
-# Skye Gestão e Inovação — Site institucional (Vercel)
+# Skye Gestão e Inovação — Site institucional v4.0
 
-Versão **3.0**, com galeria de **7 prints reais** (sem o vídeo), tema claro/escuro e revisão de conteúdo e layout.
+**Pronto para deploy estático na Vercel.** Mantém a identidade original, a galeria de prints reais, o atendimento em Socorro e região, o WhatsApp comercial e os modos claro/escuro.
 
-## Publicar na Vercel
+## Alterações desta versão
 
-**Para não perder o endereço atual:** atualize o **mesmo projeto** existente na Vercel. Caso esteja conectado ao GitHub, copie os arquivos da pasta para a raiz do repositório e faça um commit; o deploy é automático.
+- Título principal: **“Sua empresa é única. Seu sistema também deveria ser.”**
+- Captura real do Corte Certo em destaque maior na página inicial, com clique para ampliar.
+- Captura de equipe comercial ampliável, com a identificação **SPM ocultada** na imagem utilizada.
+- Galeria de sete imagens com filtros, navegação e zoom manual de 100% a 300%.
+- **Demonstração interativa em `demo.html`**, acessível pelo hero e pelo portfólio, com duas experiências:
+  - **Gestão comercial**: visão geral, pedido de teste, estoque e histórico de pedidos.
+  - **Equipe de vendas**: carteira, retornos, mensagens editáveis, pré-visualização e simulação de contato realizado.
+- A demonstração usa **somente dados fictícios** no navegador. Não possui backend, cadastro, integração, envio de mensagens ou persistência; recarregar a página reinicia a experiência. Não representa uma instalação funcional dos sistemas reais.
+- Foto original enviada da praça de **Socorro (SP)** continua na seção de visita presencial.
+- Mantido o canal de WhatsApp `(19) 99849-1844`.
 
-Caso a publicação original tenha sido pelo Vercel Drop e não haja GitHub conectado, é possível usar a Vercel CLI no diretório do site: `npx vercel link` (selecionando o projeto existente) e depois `npx vercel --prod`. Verifique que o projeto selecionado é o já publicado. Um novo envio no Drop pode criar outro projeto.
+## Estrutura
 
-A estrutura é estática: `index.html`, `styles.css`, `script.js`, `config.js`, `privacidade.html` e `assets/` (com as subpastas). Não suba apenas o ZIP como arquivo dentro de outro diretório.
+- `index.html` — site institucional.
+- `styles.css`, `script.js`, `config.js` — aparência e interações do site.
+- `demo.html`, `demo.css`, `demo.js` — demonstração independente, sem servidor.
+- `privacidade.html` — informações sobre o formulário de contato.
+- `assets/` — logotipo original, fotos e prints reais.
 
-## Alterações
+## Atualizar o MESMO projeto na Vercel
 
-- Hero e seção de personalização com prints reais.
-- Galeria com filtros por tema e ampliação de imagens (sem vídeo).
-- Nome Corte Certo público; imagem de equipe comercial foi **recortada** para remover totalmente a marca SPM e o breadcrumb que a mencionava.
-- Prints com informações desnecessárias de clientes / endereços de desenvolvimento foram recortados.
-- Tema automático conforme preferência do sistema (`prefers-color-scheme`) e alternância manual opcional pelo ícone no menu. A escolha manual fica salva localmente.
-- Revisão de textos comerciais com linguagem direta.
-- Formulário prepara mensagem de WhatsApp; sem banco de dados de mensagens no site.
+**Não faça upload de outro ZIP pelo Vercel Drop se você deseja preservar o projeto e o domínio atuais.**
 
-## Contato
+**Com GitHub conectado:** substitua os arquivos na raiz do repositório e faça um commit na branch de produção. O mesmo projeto da Vercel publicará a atualização.
 
-WhatsApp no `config.js`: **5519998491844**. Para trocá-lo posteriormente, altere o valor `whatsapp`.
+**Se você ainda usa somente o Vercel Drop:** descompacte o ZIP em uma pasta, abra o terminal nessa pasta e execute:
 
-## Verificações sugeridas após o deploy
+```sh
+npx vercel login
+npx vercel link
+npx vercel --prod
+```
 
-1. Abrir no desktop e no celular.
-2. Verificar modo claro e escuro; o botão alterna Automático → Claro → Escuro.
-3. Abrir galeria, filtrar projetos, ampliar prints e voltar ao fechar.
-4. Testar WhatsApp e formulário.
-5. Revisar a política de privacidade e as permissões de uso das imagens.
+No comando `vercel link`, **escolha o projeto da Skye já existente**, não um projeto novo. O domínio já associado a esse projeto permanece configurado; a correção do DNS no Registro.br é independente do conteúdo publicado.
 
-## Observação comercial
+> A Vercel restringe o uso do plano Hobby a projetos pessoais e não comerciais. Confira o plano empresarial adequado ao site da Skye.
 
-O site é institucional e não exige compra de domínio para funcionar em um endereço `*.vercel.app`. O plano Hobby da Vercel é restrito a atividades pessoais e não comerciais; verifique o plano adequado para um site empresarial.
+## Checklist após publicar
 
+1. Visite o domínio e confirme que está apontando para a Vercel.
+2. Abra a tela real do Corte Certo e teste **+**, **−**, **Ajustar à tela**, **Próxima** e **Fechar**.
+3. Faça o mesmo com a tela de equipe comercial; confirme que a marca SPM não aparece.
+4. Use a **demonstração interativa** em `demo.html` e registre um pedido fictício; teste também os modelos de mensagem.
+5. Confira no celular, em modo claro/escuro e os links de WhatsApp.
+6. Revise a política de privacidade e as autorizações de divulgação dos prints antes de campanhas públicas.
 
-## Versão 3.0 — aprimoramentos visuais
-- Textos comerciais revisados com situações reais, sem promessas de resultados garantidos.
-- Seção de visita em Socorro e região com etapas de consultoria e composição editorial de telas reais.
-- Galeria hierarquizada com dois destaques e agrupamento responsivo, sem divulgar o nome SPM.
-- Contraste reforçado nos temas automático, claro e escuro.
-- Para atualizar um site já publicado, faça o deploy **no mesmo projeto** da Vercel (via GitHub integrado ou Vercel CLI), e não crie outro projeto no Drop.
+## Canal comercial
+
+O WhatsApp está configurado em `config.js` como `5519998491844`. O formulário **não envia dados automaticamente**: ele prepara uma mensagem para abertura do WhatsApp, para o visitante revisar e enviar.

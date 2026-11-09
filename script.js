@@ -178,3 +178,46 @@
   dialog?.addEventListener('close',()=>previousFocus?.focus());
   document.addEventListener('keydown',e=>{if (!dialog?.open)return;if(e.key==='ArrowRight')show(selected+1);if(e.key==='ArrowLeft')show(selected-1);});
 })();
+
+// Skye v4: acessos diretos à galeria e zoom controlado pelo visitante.
+(() => {
+  'use strict';
+  const dialog = document.getElementById('gallery-dialog');
+  const enlarged = document.getElementById('gallery-dialog-image');
+  const stage = document.getElementById('gallery-zoom-stage');
+  const zoomLabel = document.getElementById('gallery-zoom-level');
+  const zoomIn = document.getElementById('gallery-zoom-in');
+  const zoomOut = document.getElementById('gallery-zoom-out');
+  const resetButton = document.getElementById('gallery-zoom-reset');
+  if (!dialog || !enlarged || !stage) return;
+  let zoom = 1;
+  function setZoom(next) {
+    zoom = Math.max(1, Math.min(3, Math.round(next * 100) / 100));
+    const active = zoom > 1;
+    stage.dataset.zoomed = String(active);
+    enlarged.style.width = active ? `${Math.round(Math.min(enlarged.naturalWidth || stage.clientWidth, stage.clientWidth - 20) * zoom)}px` : '';
+    if (!active) enlarged.style.maxHeight = '';
+    if (zoomLabel) zoomLabel.textContent = `${Math.round(zoom * 100)}%`;
+    if (zoomOut) zoomOut.disabled = zoom <= 1;
+    if (zoomIn) zoomIn.disabled = zoom >= 3;
+  }
+  const reset = () => { stage.scrollTo({left:0,top:0});setZoom(1); };
+  zoomIn?.addEventListener('click', () => setZoom(zoom + .5));
+  zoomOut?.addEventListener('click', () => setZoom(zoom - .5));
+  resetButton?.addEventListener('click', reset);
+  new MutationObserver(reset).observe(enlarged, {attributes:true, attributeFilter:['src']});
+  dialog.addEventListener('close', reset);
+  dialog.addEventListener('keydown', e => {
+    if (e.key === '+' || e.key === '=') { e.preventDefault();setZoom(zoom + .5); }
+    if (e.key === '-') { e.preventDefault();setZoom(zoom - .5); }
+    if (e.key === '0') { e.preventDefault();reset(); }
+  });
+  document.querySelectorAll('[data-open-gallery]').forEach(button => {
+    button.addEventListener('click', () => {
+      // Cards reais permanecem como fonte da imagem, incluindo alt e descrição.
+      document.querySelector('.gallery-filter[data-filter="todos"]')?.click();
+      const card = document.querySelector(`.showcase-card[data-index="${button.dataset.openGallery}"]`);
+      if (card) card.click();
+    });
+  });
+})();

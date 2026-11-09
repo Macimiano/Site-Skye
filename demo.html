@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demonstração interativa | Skye Gestão e Inovação</title>
+  <meta name="description" content="Explore uma simulação interativa com dados fictícios de pedidos, estoque e equipe comercial. Não conectado a sistemas reais.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="demo.css"><script defer src="demo.js"></script>
+</head>
+<body>
+<a class="skip" href="#demo-content">Pular para a demonstração</a>
+<header class="demo-topbar">
+  <a class="back" href="index.html#demonstracao">← Voltar ao site</a>
+  <div class="demo-brand"><img src="assets/logo-skye-recortada.png" alt="Skye Gestão e Inovação"><span>Laboratório de demonstração</span></div>
+  <a class="contact" href="index.html#contato">Conversar sobre meu projeto ↗</a>
+</header>
+<section class="demo-intro">
+  <div><span class="eyebrow">EXPERIMENTE NA PRÁTICA</span><h1>Conheça possibilidades.<br><em>Sem entrar em um sistema real.</em></h1><p>Uma amostra interativa de dois tipos de solução que a Skye pode desenvolver. Explore os menus, faça um pedido de teste ou simule um contato com cliente.</p></div>
+  <aside class="fictitious"><strong>Ambiente 100% simulado</strong><p>Dados, clientes, produtos e valores são fictícios. Nada é enviado, gravado em servidor ou associado a operações reais. Ao atualizar a página, as mudanças são descartadas.</p></aside>
+</section>
+<main id="demo-content" class="shell">
+  <div class="app-heading">
+    <div><span class="app-overline">ESCOLHA O TIPO DE SOLUÇÃO</span><h2 id="project-heading">Gestão e pedidos</h2></div>
+    <div class="project-switch" role="group" aria-label="Escolher demonstração">
+      <button type="button" class="chosen" data-project="gestao" aria-pressed="true">Gestão comercial</button>
+      <button type="button" data-project="equipe" aria-pressed="false">Equipe de vendas</button>
+    </div>
+  </div>
+  <div class="app-layout">
+    <nav class="side" aria-label="Módulos simulados">
+      <div class="side-brand"><span class="side-brand-icon">S</span><div><strong id="app-name">Corte Certo</strong><small>SIMULAÇÃO</small></div></div>
+      <div id="side-links" class="side-links"></div>
+      <div class="side-bottom">Uma amostra de como soluções podem se adaptar à rotina. Não é uma demonstração integral do produto.</div>
+    </nav>
+    <section class="workspace" id="workspace" aria-live="polite" aria-label="Tela do sistema simulado"></section>
+  </div>
+</main>
+<footer class="demo-footer"><span>Skye Gestão e Inovação · Visualização com dados fictícios</span><a href="index.html#contato">Solicitar um projeto personalizado →</a></footer>
+</body>
+</html>
