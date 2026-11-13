@@ -13,6 +13,7 @@
 <title>Skye Gestão e Inovação | Sistemas sob medida para o seu negócio</title>
 <link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="styles.css" rel="stylesheet"/>
+<link rel="stylesheet" href="ambient.css">
 <script defer="" src="config.js"></script>
 <script defer="" src="script.js"></script>
 <meta content="light dark" name="color-scheme"/></head>
@@ -214,5 +215,10 @@
 </main>
 <footer class="footer"><div class="container"><div class="footer-top"><div class="footer-brand"><img alt="Logotipo original Skye Gestão e Inovação" loading="lazy" src="assets/logo-skye-recortada.png"/><div><h3>Skye Gestão e Inovação</h3><p>Sistemas que acompanham a sua rotina.</p></div></div><div class="footer-links"><a href="#inicio">Início</a><a href="#solucoes">Soluções</a><a href="#processo">Processo</a><a href="#demonstracao">Projetos reais</a><a href="#visita">Visita</a><a href="#contato">Contato</a><a href="privacidade.html">Privacidade</a></div></div><div class="footer-bottom"><span>© <span id="year">2026</span> Skye Gestão e Inovação. Todos os direitos reservados.</span><span>Socorro · SP e atendimento remoto.</span></div></div></footer>
 <a aria-label="Conversar com a Skye" class="floating-contact" href="#contato" id="floating-contact"><svg class="ic"><use href="#i-message"></use></svg><span>Fale com a Skye</span></a>
+<div class="ambient-player" role="region" aria-label="Controle de música ambiente">
+  <audio id="skye-ambient-audio" src="assets/audio/skye-ambiente-original.mp3" preload="none" loop></audio>
+  <button class="ambient-toggle" id="ambient-toggle" type="button" aria-label="Ativar música ambiente" aria-pressed="false" title="Ativar música ambiente suave"><span class="ambient-note" aria-hidden="true">♫</span><span class="ambient-caption">Música ambiente</span></button>
+</div>
+<script defer src="ambient.js"></script>
 </body>
 </html>

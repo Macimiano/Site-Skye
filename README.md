@@ -53,3 +53,10 @@ No comando `vercel link`, **escolha o projeto da Skye já existente**, não um p
 ## Canal comercial
 
 O WhatsApp está configurado em `config.js` como `5519998491844`. O formulário **não envia dados automaticamente**: ele prepara uma mensagem para abertura do WhatsApp, para o visitante revisar e enviar.
+
+
+## Música ambiente (nova versão)
+- `assets/audio/skye-ambiente-original.mp3`: composição instrumental original da Skye, suave e discreta (72 s em loop), sem necessidade de licença de terceiros.
+- `ambient.css` e `ambient.js`: botão de música acessível em todas as páginas, com início **apenas após clique** (políticas de autoplay dos navegadores).
+- Reproduz em volume baixo, permite pausar, repete em loop e pausa ao mudar de aba. Ao trocar de página, é necessário clicar novamente para ativar: o site é estático e não mantém um player contínuo entre carregamentos.
+- Não há necessidade de instalar dependências ou configurar serviços adicionais na Vercel.

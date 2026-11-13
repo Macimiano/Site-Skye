@@ -8,6 +8,7 @@
   <title>Privacidade | Skye Gestão e Inovação</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="ambient.css">
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
@@ -21,4 +22,9 @@
   <p class="legal-note"><strong>Antes da publicação comercial definitiva:</strong> incluir o canal de contato responsável por privacidade, conferir esta política com o funcionamento real da hospedagem e de ferramentas instaladas posteriormente e revisar os procedimentos internos de atendimento a solicitações de titulares.</p>
   </div></section></main>
   <footer class="footer"><div class="container"><div class="footer-bottom" style="margin-top:0"><span>© 2026 Skye Gestão e Inovação.</span><a href="index.html">Página inicial</a></div></div></footer>
+<div class="ambient-player" role="region" aria-label="Controle de música ambiente">
+  <audio id="skye-ambient-audio" src="assets/audio/skye-ambiente-original.mp3" preload="none" loop></audio>
+  <button class="ambient-toggle" id="ambient-toggle" type="button" aria-label="Ativar música ambiente" aria-pressed="false" title="Ativar música ambiente suave"><span class="ambient-note" aria-hidden="true">♫</span><span class="ambient-caption">Música ambiente</span></button>
+</div>
+<script defer src="ambient.js"></script>
 </body></html>

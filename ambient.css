@@ -1,0 +1,12 @@
+/* Controle de música ambiente — acessível e discreto nos dois temas. */
+.ambient-player{position:fixed;left:18px;bottom:20px;z-index:120;display:flex;align-items:center;gap:6px;max-width:calc(100vw - 92px)}
+.ambient-toggle{appearance:none;display:inline-flex;align-items:center;gap:9px;min-height:44px;padding:11px 14px;border-radius:999px;background:rgba(8,26,52,.95);backdrop-filter:blur(16px);border:1px solid rgba(203,225,252,.32);box-shadow:0 8px 28px rgba(0,0,0,.19);color:#f7fbff;font:700 12px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.01em;cursor:pointer;transition:transform .18s,border-color .18s,background .18s}
+.ambient-toggle:hover{background:#153b67;border-color:rgba(255,221,124,.82);transform:translateY(-2px)}
+.ambient-toggle:focus-visible{outline:3px solid #ffdc6a;outline-offset:3px}
+.ambient-toggle[aria-pressed="true"]{border-color:#e6c968;background:#102d50}
+.ambient-toggle[aria-pressed="true"] .ambient-note{color:#ffda73}
+.ambient-note{display:grid;place-items:center;width:24px;height:24px;flex:none;border-radius:50%;background:rgba(255,255,255,.1);font-size:17px;color:#c6ddff}
+.ambient-toggle[aria-pressed="true"] .ambient-note{background:rgba(255,218,115,.12)}
+.ambient-caption{white-space:nowrap}
+@media(max-width:540px){.ambient-player{bottom:14px;left:12px}.ambient-toggle{min-height:43px;padding:10px 12px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.ambient-toggle{transition:none}}

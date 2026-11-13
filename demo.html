@@ -5,7 +5,8 @@
   <title>Demonstração interativa | Skye Gestão e Inovação</title>
   <meta name="description" content="Explore uma simulação interativa com dados fictícios de pedidos, estoque e equipe comercial. Não conectado a sistemas reais.">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="demo.css"><script defer src="demo.js"></script>
+  <link rel="stylesheet" href="demo.css">
+<link rel="stylesheet" href="ambient.css"><script defer src="demo.js"></script>
 </head>
 <body>
 <a class="skip" href="#demo-content">Pular para a demonstração</a>
@@ -36,5 +37,10 @@
   </div>
 </main>
 <footer class="demo-footer"><span>Skye Gestão e Inovação · Visualização com dados fictícios</span><a href="index.html#contato">Solicitar um projeto personalizado →</a></footer>
+<div class="ambient-player" role="region" aria-label="Controle de música ambiente">
+  <audio id="skye-ambient-audio" src="assets/audio/skye-ambiente-original.mp3" preload="none" loop></audio>
+  <button class="ambient-toggle" id="ambient-toggle" type="button" aria-label="Ativar música ambiente" aria-pressed="false" title="Ativar música ambiente suave"><span class="ambient-note" aria-hidden="true">♫</span><span class="ambient-caption">Música ambiente</span></button>
+</div>
+<script defer src="ambient.js"></script>
 </body>
 </html>
