@@ -38,12 +38,21 @@ O domínio `www.skyegestao.com.br` não pôde ser resolvido pelo ambiente de tes
 - edição e remoção de itens;
 - cálculo automático pelo tamanho;
 - cadastro fictício de clientes;
-- finalização simulada de venda;
+- montagem do pedido até a etapa comercial, com conclusão e pagamentos bloqueados;
 - histórico e andamento de pedidos;
 - estoque e fichas técnicas simulados;
 - contas, indicadores e relatório de vendas coerentes com os registros locais;
 - mensagens e integrações apresentadas apenas como simulações;
 - restauração completa da demonstração.
+
+## Limitações comerciais da amostra
+
+- pagamentos e conclusão de pedidos ficam bloqueados;
+- cadastros operacionais e alterações permanentes não são gravados;
+- movimentações de estoque, financeiro, cardápio, usuários e configurações ficam somente para consulta;
+- comandas, mensagens externas e mudanças de situação do pedido ficam bloqueadas;
+- toda tentativa de usar um recurso restrito mostra um convite para falar com a SKYE;
+- o WhatsApp comercial utilizado é `(19) 99849-1844` (`5519998491844` no link).
 
 ## Arquivos alterados na prévia
 
@@ -68,7 +77,8 @@ Os demais arquivos institucionais foram comparados com a origem e permaneceram i
 - seleção de vários itens sem acréscimo indevido;
 - edição e remoção de copos;
 - pedido com mais de um copo e total calculado;
-- criação do registro no histórico;
+- bloqueio da conclusão, do pagamento e de novos cadastros;
+- preservação do histórico fictício apenas para consulta;
 - restauração dos dados fictícios;
 - ausência de chamadas externas durante o fluxo testado;
 - busca por identificações do projeto original na nova demonstração.

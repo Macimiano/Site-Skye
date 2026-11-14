@@ -48,7 +48,7 @@ No comando `vercel link`, **escolha o projeto da Skye já existente**, não um p
 2. Abra a tela real do Corte Certo e teste **+**, **−**, **Ajustar à tela**, **Próxima** e **Fechar**.
 3. Faça o mesmo com a tela de equipe comercial; confirme que a marca SPM não aparece.
 4. Use a **demonstração interativa** em `demo.html` e registre um pedido fictício; teste também os modelos de mensagem.
-5. Abra `/demonstracao-acaiteria/`, monte mais de um copo, edite e remova itens, registre um pedido e restaure os exemplos.
+5. Abra `/demonstracao-acaiteria/`, monte mais de um copo, edite e remova itens, confira o bloqueio comercial e restaure os exemplos.
 6. Confira no celular, em modo claro/escuro e os links de WhatsApp.
 7. Revise a política de privacidade e as autorizações de divulgação dos prints antes de campanhas públicas.
 
