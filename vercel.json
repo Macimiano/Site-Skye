@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/demonstracao-acaiteria",
+      "destination": "https://macimiano.github.io/skye-demo-gestao-comercial/"
+    },
+    {
+      "source": "/demonstracao-acaiteria/:path*",
+      "destination": "https://macimiano.github.io/skye-demo-gestao-comercial/:path*"
+    }
+  ]
+}

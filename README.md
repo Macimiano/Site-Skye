@@ -1,62 +1,40 @@
-# Skye Gestão e Inovação — site institucional v5.0
+# Skye Gestão e Inovação — site v5.2 (demonstrações unificadas)
 
-Pronto para hospedagem estática no mesmo projeto da Vercel (sem backend adicional).
+Projeto estático preparado para implantação no projeto Vercel já existente.
 
-## Alteração principal
+## O que mudou
 
-Uma **nova demonstração de gestão de lojas** em `demonstracao-lojas/index.html`, acessível pelo site institucional na seção **Demonstrações**. A demonstração anterior, em `demo.html`, continua disponível.
+- A seção com sete prints foi removida da página inicial e substituída por três cartões de experiências práticas.
+- Os três cartões abrem uma apresentação unificada em `demonstracoes/index.html`, com três abas e uma janela para explorar o sistema.
+- A demonstração de **gestão de lojas** permanece totalmente no ZIP em `demonstracao-lojas/` (mercadinho, tabacaria e agropecuária).
+- A demonstração de **equipe comercial** permanece totalmente no ZIP em `demo.html?modulo=equipe`.
+- A demonstração da **açaíteria** usa a versão pública ORIGINAL da Skye hospedada no GitHub Pages, mas é acessada em `/demonstracao-acaiteria/` no próprio domínio via **rewrite externo da Vercel** (em `vercel.json`). O visitante não é redirecionado para outro domínio. O site de origem precisa continuar online; esta versão ainda depende do GitHub Pages para essa experiência.
+- O hub oferece a opção **Abrir tela inteira**, permanecendo no endereço de `skyegestao.com.br`.
+- O zoom do print do Corte Certo e da equipe comercial permanece nas áreas de abertura e de personalização do site, mesmo sem a galeria.
+- Logotipo, tema automático, música ambiente, foto de Socorro e WhatsApp (19) 98158-8431 preservados.
 
-### Origem e escopo
+## Rotas
 
-A estrutura funcional foi baseada no arquivo `Modelo-Gestao-Loja.zip` fornecido pelo proprietário. O original é um sistema FastAPI + SQLite com login e módulos de PDV, estoque, clientes, vendas, contas a pagar e funcionalidades adicionais.
+- `/` — apresentação institucional
+- `/demonstracoes/#acaiteria` — hub, açaíteria
+- `/demonstracoes/#lojas` — hub, lojas
+- `/demonstracoes/#equipes` — hub, equipe comercial
+- `/demonstracao-acaiteria/` — açaíteria completa via proxy externo
+- `/demonstracao-lojas/` — simulador limitado de comércio
+- `/demo.html?modulo=equipe` — simulador limitado de equipe comercial
 
-Para não expor backend, usuários, chaves, clientes ou integrações em uma página pública, esta versão é uma **simulação estática e limitada**, com interface própria inspirada no modelo original. Não substitui uma instância real do sistema.
+## Implantar
 
-- Escolha entre Mercadinho, Tabacaria e Agropecuária; a seleção carrega exemplos próprios.
-- Visão geral, frente de caixa, venda por unidade e por peso, estoque, vendas, clientes e fidelização, contas a pagar e relatórios.
-- Até **6 novas vendas** e **2 clientes fictícios** por visita, para ilustração.
-- Pagamentos apenas simulados; **não cobra, não gera Pix, não emite documentos fiscais, não importa arquivos**.
-- Sem login, usuários administrativos, configurações, API, banco de dados ou integração com sistemas reais.
-- Dados mantidos somente em memória no navegador; recarregar ou clicar em Reiniciar volta aos exemplos.
+1. Extraia este ZIP.
+2. Atualize **o mesmo repositório GitHub ligado ao projeto atual da Vercel**, com todos os arquivos e `vercel.json` na raiz. Faça commit na branch de produção.
+3. Se seu projeto ainda é apenas Vercel Drop, use Vercel CLI `npx vercel link` para associar ao projeto **existente** e depois `npx vercel --prod`.
+4. Teste **todas as três abas** em `https://www.skyegestao.com.br/demonstracoes/` no navegador. As regras do `vercel.json` só funcionam depois do deploy na Vercel; um servidor estático local não consegue executar o proxy da açaíteria.
+5. Verifique os dois botões de ampliar telas reais e o WhatsApp.
 
-### Arquivos novos
+## Dados e limitações
 
-- `demonstracao-lojas/index.html`
-- `demonstracao-lojas/lojas.css`
-- `demonstracao-lojas/lojas.js`
-
-### Alterações no site
-
-- Atualizado `index.html` com duas opções de demonstração em `#demonstracoes`.
-- Atualizado `styles.css` com a apresentação responsiva da nova seção.
-- Adicionado texto de privacidade referente à demonstração.
-- Preservados a logo, o tema do site, a trilha ambiente, a galeria, a página anterior e o WhatsApp **(19) 98158-8431**.
-
-### Atualizar o mesmo projeto da Vercel
-
-**Não reenvie o ZIP pelo Vercel Drop como novo projeto.**
-
-1. Extraia o ZIP mantendo a estrutura das pastas e o arquivo `index.html` na raiz.
-2. Se o site estiver conectado ao GitHub, substitua o conteúdo do repositório e faça commit na branch de produção.
-3. Se o projeto foi criado apenas pelo Vercel Drop, execute nesta pasta:
-
-```bash
-npx vercel login
-npx vercel link
-npx vercel --prod
-```
-
-Em `vercel link`, escolha o projeto existente da Skye.
-
-Após a publicação, a nova demo ficará em `/demonstracao-lojas/` no **mesmo domínio**. O endereço não estará disponível até o deploy.
-
-Confira se o plano da Vercel permite uso comercial do site; o plano Hobby é restrito a uso pessoal/não comercial.
-
-## Checklist
-
-- Acessar `/#demonstracoes` e abrir as duas experiências.
-- No novo simulador, fazer uma venda e verificar o histórico, estoque e relatório.
-- Trocar o segmento (os exemplos se reiniciam) e testar venda por peso na agropecuária.
-- Testar `Reiniciar`, responsividade, formulário do site e links do WhatsApp.
-
-A publicação em produção depende do proprietário do projeto na Vercel. Nenhum deploy foi efetuado por este pacote.
+- Todos os exemplos são **fictícios** e não representam operações reais de clientes.
+- A demo de açaíteria armazena alterações no navegador via localStorage. Demais experiências simulam operações sem acesso a banco de produção.
+- O sistema de açaíteria original está em `https://github.com/Macimiano/skye-demo-gestao-comercial`, usado com permissão do proprietário. O proxy não inclui uma cópia local desse código neste ZIP.
+- Em caso de indisponibilidade da origem GitHub Pages, a açaíteria pode não carregar. Para tornar as três experiências totalmente independentes de hospedagem externa, será necessário incorporar os quatro arquivos públicos `index.html`, `style.css`, `config.js` e `app.js` do repositório original na pasta `demonstracao-acaiteria/` e remover os rewrites.
+- A opção de publicar diretamente na Vercel ainda depende de acesso à conta Vercel; o ZIP por si só não altera o site no ar.
