@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const demos={
  acaiteria:{label:'Açaíteria modelo',caption:'Pedidos e personalização de produtos',url:'../demonstracao-acaiteria/',title:'Demonstração de açaíteria com dados fictícios'},
- equipes:{label:'Equipe comercial',caption:'Clientes, pedidos e mensagens prontas',url:'../demo.html?modulo=equipe',title:'Demonstração de equipe comercial com dados fictícios'}
+ equipes:{label:'Equipe de vendas',caption:'Carteira, rotas, visitas, cotações, recuperação e desempenho',url:'../demonstracao-equipes/',title:'Demonstração limitada de equipe de vendas com dados fictícios'}
 };
 const shopLabels={mercadinho:'Mercadinho',tabacaria:'Tabacaria',agropecuaria:'Agropecuária'};
 const frame=document.getElementById('hub-iframe'),loader=document.getElementById('hub-loader');

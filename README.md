@@ -1,4 +1,4 @@
-# Skye Gestão e Inovação — site v5.2 (demonstrações unificadas)
+# Skye Gestão e Inovação — site v5.4 (demonstração de vendedores ampliada)
 
 Projeto estático preparado para implantação no projeto Vercel já existente.
 
@@ -7,7 +7,7 @@ Projeto estático preparado para implantação no projeto Vercel já existente.
 - A seção com sete prints foi removida da página inicial e substituída por três cartões de experiências práticas.
 - Os três cartões abrem uma apresentação unificada em `demonstracoes/index.html`, com três abas e uma janela para explorar o sistema.
 - A demonstração de **gestão de lojas** permanece totalmente no ZIP em `demonstracao-lojas/` (mercadinho, tabacaria e agropecuária).
-- A demonstração de **equipe comercial** permanece totalmente no ZIP em `demo.html?modulo=equipe`.
+- A demonstração de **equipe de vendas** foi reconstruída em `demonstracao-equipes/`, independente do sistema original, com exemplos e operações limitadas.
 - A demonstração da **açaíteria** usa a versão pública ORIGINAL da Skye hospedada no GitHub Pages, mas é acessada em `/demonstracao-acaiteria/` no próprio domínio via **rewrite externo da Vercel** (em `vercel.json`). O visitante não é redirecionado para outro domínio. O site de origem precisa continuar online; esta versão ainda depende do GitHub Pages para essa experiência.
 - O hub oferece a opção **Abrir tela inteira**, permanecendo no endereço de `skyegestao.com.br`.
 - O zoom do print do Corte Certo e da equipe comercial permanece nas áreas de abertura e de personalização do site, mesmo sem a galeria.
@@ -21,7 +21,7 @@ Projeto estático preparado para implantação no projeto Vercel já existente.
 - `/demonstracoes/#equipes` — hub, equipe comercial
 - `/demonstracao-acaiteria/` — açaíteria completa via proxy externo
 - `/demonstracao-lojas/` — simulador limitado de comércio
-- `/demo.html?modulo=equipe` — simulador limitado de equipe comercial
+- `/demonstracao-equipes/` — demonstração limitada baseada na rotina de vendedores; `demo.html` redireciona à nova versão
 
 ## Implantar
 
@@ -48,3 +48,14 @@ Projeto estático preparado para implantação no projeto Vercel já existente.
 - URLs com `?tipo=mercadinho`, `?tipo=tabacaria` e `?tipo=agropecuaria` abrem diretamente a versão selecionada a partir de um link explícito.
 - Para mudar de segmento, use **Escolher outra versão** na central ou **Trocar versão** dentro da demonstração. A mudança reinicia os dados fictícios do segmento escolhido.
 - Todas as demais demonstrações, o site institucional, o WhatsApp e a configuração Vercel foram preservados.
+
+
+## Versão 5.4 — Equipe comercial
+
+- Removido o seletor redundante “Gestão comercial / Equipe de vendas”. O visitante acessa diretamente uma única demonstração específica de vendedores.
+- Nova interface com módulos inspirados no projeto de equipe de vendas enviado: visão geral, carteira, recuperação, atividades, visitas externas, rotas, catálogo, cotações, vendas manuais, desempenho e mensagens prontas.
+- A interface não usa logotipo, nome ou código do sistema original. A marca Skye aparece apenas no cabeçalho de navegação e na comunicação comercial.
+- Limites por sessão: 4 contatos, 2 visitas, 2 cotações, 2 vendas manuais e 2 edições de mensagens. Atualizar/reiniciar restaura os exemplos. Nenhum dado persiste.
+- Não há login, envio de WhatsApp, importação de PDF, custos, download, aprovação administrativa, integração com estoque, geolocalização, banco, pagamentos ou emissão fiscal.
+- O produto comercial real não é um PDV: vendas são lançadas manualmente. Esta simulação respeita essa separação.
+- A publicação ocorre via atualização do **projeto Vercel existente** e validação em `/demonstracoes/#equipes` e `/demonstracao-equipes/`. A criação do ZIP não publica automaticamente.
