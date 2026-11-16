@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b2248">
+  <meta name="description" content="Experimente uma simulação da gestão de lojas da Skye: frente de caixa, estoque, vendas e relatórios para mercadinhos, tabacarias e agropecuárias.">
+  <title>Demo de gestão de lojas | Skye Gestão e Inovação</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="lojas.css">
+  <script defer src="lojas.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Ir para o conteúdo</a>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar" aria-label="Menu da demonstração">
+      <a class="brand" href="../index.html" aria-label="Voltar ao site da Skye">
+        <img src="../assets/logo-skye-recortada.png" alt="Skye Gestão e Inovação">
+        <div><strong>GESTÃO DE LOJAS</strong><span>DEMONSTRAÇÃO</span></div>
+      </a>
+      <div class="side-eyebrow">DEMONSTRAÇÃO INTERATIVA</div>
+      <nav class="main-nav" id="nav" aria-label="Áreas da demonstração">
+        <button type="button" data-page="dashboard" class="active"><span class="nav-ic">▦</span>Visão geral</button>
+        <button type="button" data-page="pdv"><span class="nav-ic">▣</span>Frente de caixa</button>
+        <button type="button" data-page="estoque"><span class="nav-ic">▤</span>Produtos e estoque</button>
+        <button type="button" data-page="vendas"><span class="nav-ic">≡</span>Vendas</button>
+        <button type="button" data-page="clientes"><span class="nav-ic">♙</span>Clientes e fidelização</button>
+        <button type="button" data-page="contas"><span class="nav-ic">▤</span>Contas a pagar</button>
+        <button type="button" data-page="relatorios"><span class="nav-ic">▥</span>Relatórios</button>
+      </nav>
+      <div class="nav-limit"><span class="dot"></span><strong>Modo limitado</strong><p>Sem operações reais, configurações, importações ou dados de clientes.</p></div>
+      <div class="side-actions"><a href="../index.html#demonstracoes">← Voltar ao site</a><a href="https://wa.me/5519981588431?text=Ol%C3%A1%21%20Testei%20a%20demonstra%C3%A7%C3%A3o%20de%20gest%C3%A3o%20de%20lojas%20da%20Skye%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer">Conversar com a Skye ↗</a></div>
+    </aside>
+    <div class="app-main">
+      <div class="mobile-toplink"><a href="../index.html#demonstracoes">← Voltar ao site da Skye</a><span>DEMO · SKYE</span></div>
+      <div class="demo-strip"><span class="strip-dot"></span><span><strong>Ambiente de demonstração</strong> · Todos os produtos, clientes e valores são fictícios. Nenhuma venda ou pagamento é real.</span><button type="button" id="resetDemoTop" title="Reiniciar os dados fictícios">↻ Reiniciar</button></div>
+      <header class="app-header">
+        <div class="header-left"><div><span class="kicker">MODELO DE GESTÃO DE LOJA</span><h1 id="pageTitle">Visão geral</h1><p id="pageSubtitle">Conheça a rotina de um comércio com dados de exemplo.</p></div></div>
+        <div class="header-right"><label for="segmentSelect">Experimente um segmento</label><select id="segmentSelect" aria-label="Selecionar o tipo de loja"><option value="mercadinho">Mercadinho</option><option value="tabacaria">Tabacaria</option><option value="agropecuaria">Agropecuária</option></select></div>
+      </header>
+      <main id="main" tabindex="-1"><div id="app" aria-live="polite"></div></main>
+      <footer class="app-footer"><span>Uma amostra baseada no Modelo de Gestão de Loja · Recursos completos dependem do projeto contratado.</span><a href="../index.html#contato">Pedir uma solução para minha loja ↗</a></footer>
+    </div>
+  </div>
+  <dialog id="detailsDialog" class="details-dialog" aria-labelledby="dialogHeading"><div class="dialog-head"><h2 id="dialogHeading">Detalhes da venda</h2><button id="dialogClose" aria-label="Fechar detalhes" type="button">✕</button></div><div id="dialogBody"></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
