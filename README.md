@@ -38,3 +38,13 @@ Projeto estático preparado para implantação no projeto Vercel já existente.
 - O sistema de açaíteria original está em `https://github.com/Macimiano/skye-demo-gestao-comercial`, usado com permissão do proprietário. O proxy não inclui uma cópia local desse código neste ZIP.
 - Em caso de indisponibilidade da origem GitHub Pages, a açaíteria pode não carregar. Para tornar as três experiências totalmente independentes de hospedagem externa, será necessário incorporar os quatro arquivos públicos `index.html`, `style.css`, `config.js` e `app.js` do repositório original na pasta `demonstracao-acaiteria/` e remover os rewrites.
 - A opção de publicar diretamente na Vercel ainda depende de acesso à conta Vercel; o ZIP por si só não altera o site no ar.
+
+
+## v5.3 — Escolha obrigatória de segmento para lojas
+
+- A opção **Lojas e comércio** na central de demonstrações exibe uma tela com duas famílias bem separadas: **Comércio e conveniência** (Mercadinho e Tabacaria) e **Agropecuária**.
+- A demonstração só é aberta quando o visitante clica ativamente em um dos três botões.
+- O endereço `/demonstracao-lojas/` **sem parâmetro** também apresenta a seleção, sem carregar Mercadinho automaticamente.
+- URLs com `?tipo=mercadinho`, `?tipo=tabacaria` e `?tipo=agropecuaria` abrem diretamente a versão selecionada a partir de um link explícito.
+- Para mudar de segmento, use **Escolher outra versão** na central ou **Trocar versão** dentro da demonstração. A mudança reinicia os dados fictícios do segmento escolhido.
+- Todas as demais demonstrações, o site institucional, o WhatsApp e a configuração Vercel foram preservados.

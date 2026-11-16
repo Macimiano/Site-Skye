@@ -12,7 +12,27 @@
 </head>
 <body>
   <a class="skip" href="#main">Ir para o conteúdo</a>
-  <div class="app-layout">
+  <section class="store-entry" id="segmentGate" aria-labelledby="store-entry-title">
+    <div class="store-entry-container">
+      <div class="store-entry-top"><a href="../demonstracoes/#lojas" aria-label="Voltar às demonstrações da Skye"><img src="../assets/logo-skye-recortada.png" alt="Skye Gestão e Inovação"><span>SKYE · DEMONSTRAÇÃO</span></a><a href="../index.html#demonstracoes">← Voltar ao site</a></div>
+      <span class="store-entry-kicker">ESCOLHA ANTES DE COMEÇAR</span>
+      <h1 id="store-entry-title">Qual tipo de loja você quer conhecer?</h1>
+      <p class="store-entry-description">O sistema carrega um catálogo e uma rotina de exemplo para a versão escolhida. Faça sua escolha para entrar na demonstração.</p>
+      <div class="store-entry-groups">
+        <section class="store-entry-commerce" aria-labelledby="entry-commerce-title"><span class="store-entry-tag">COMÉRCIO E CONVENIÊNCIA</span><h2 id="entry-commerce-title">Mercadinho ou tabacaria</h2><p>Frente de caixa, estoque e vendas com produtos de balcão.</p>
+          <div class="store-entry-options">
+            <button type="button" data-enter-segment="mercadinho"><span>01</span><strong>Mercadinho</strong><small>Mercearia, bebidas e hortifruti</small><b>Entrar nesta versão ↗</b></button>
+            <button type="button" data-enter-segment="tabacaria"><span>02</span><strong>Tabacaria</strong><small>Acessórios e conveniência</small><b>Entrar nesta versão ↗</b></button>
+          </div>
+        </section>
+        <section class="store-entry-agro" aria-labelledby="entry-agro-title"><span class="store-entry-tag">AGROPECUÁRIA</span><h2 id="entry-agro-title">Agropecuária</h2><p>Produtos para animais, jardinagem e itens por peso.</p>
+          <button type="button" data-enter-segment="agropecuaria" class="store-entry-agro-button"><strong>Explorar a versão agropecuária</strong><small>Produtos, estoque, PDV e relatórios</small><b>Entrar nesta versão ↗</b></button>
+        </section>
+      </div>
+      <p class="store-entry-footnote">Todos os dados são fictícios. Nenhuma venda ou cobrança é realizada.</p>
+    </div>
+  </section>
+  <div class="app-layout" hidden>
     <aside class="sidebar" id="sidebar" aria-label="Menu da demonstração">
       <a class="brand" href="../index.html" aria-label="Voltar ao site da Skye">
         <img src="../assets/logo-skye-recortada.png" alt="Skye Gestão e Inovação">
@@ -36,7 +56,7 @@
       <div class="demo-strip"><span class="strip-dot"></span><span><strong>Ambiente de demonstração</strong> · Todos os produtos, clientes e valores são fictícios. Nenhuma venda ou pagamento é real.</span><button type="button" id="resetDemoTop" title="Reiniciar os dados fictícios">↻ Reiniciar</button></div>
       <header class="app-header">
         <div class="header-left"><div><span class="kicker">MODELO DE GESTÃO DE LOJA</span><h1 id="pageTitle">Visão geral</h1><p id="pageSubtitle">Conheça a rotina de um comércio com dados de exemplo.</p></div></div>
-        <div class="header-right"><label for="segmentSelect">Experimente um segmento</label><select id="segmentSelect" aria-label="Selecionar o tipo de loja"><option value="mercadinho">Mercadinho</option><option value="tabacaria">Tabacaria</option><option value="agropecuaria">Agropecuária</option></select></div>
+        <div class="header-right active-version"><div><span class="active-version-caption">VOCÊ ESCOLHEU</span><strong id="activeSegmentLabel">—</strong></div><button type="button" id="changeSegment">Trocar versão ↗</button></div>
       </header>
       <main id="main" tabindex="-1"><div id="app" aria-live="polite"></div></main>
       <footer class="app-footer"><span>Uma amostra baseada no Modelo de Gestão de Loja · Recursos completos dependem do projeto contratado.</span><a href="../index.html#contato">Pedir uma solução para minha loja ↗</a></footer>

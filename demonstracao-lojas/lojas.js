@@ -38,10 +38,11 @@ const DESCRIPTIONS = {
  relatorios:['Relatórios','Acompanhe o resumo comercial calculado sobre os dados fictícios.']
 };
 const root=document.querySelector('#app');
-const segmentSelect=document.querySelector('#segmentSelect');
+const activeSegmentLabel=document.querySelector('#activeSegmentLabel');
 const dialog=document.querySelector('#detailsDialog');
 let page='dashboard';
-let segment=['mercadinho','tabacaria','agropecuaria'].includes(new URLSearchParams(location.search).get('tipo'))?new URLSearchParams(location.search).get('tipo'):'mercadinho';
+const requestedSegment=new URLSearchParams(location.search).get('tipo');
+let segment=Object.prototype.hasOwnProperty.call(SEGMENT_NAME,requestedSegment)?requestedSegment:null;
 let state;
 let cart=[];
 let filters={pdv:'',estoque:'',stockStatus:'todos',pdvCat:'Todos',customer:''};
@@ -104,7 +105,26 @@ function checkout(){if(!cart.length){toast('Adicione um produto antes de finaliz
 }
 function showSale(id){const sale=state.sales.find(x=>x.id===id);if(!sale)return;document.querySelector('#dialogHeading').textContent=`Venda fictícia #${sale.id}`;document.querySelector('#dialogBody').innerHTML=`<div class="dialog-content"><span class="pill">Somente demonstração</span><p>Cliente: ${safe(sale.customer)} · Horário: ${safe(sale.time)}</p><p>Pagamento: ${safe(sale.method)}</p><div class="table-wrap"><table><thead><tr><th>Item</th><th>Quantidade</th><th>Total</th></tr></thead><tbody>${sale.items.map(i=>`<tr><td>${safe(i.name)}</td><td>${unitQty(i,i.qty)}</td><td>${money(Math.round(i.price*i.qty))}</td></tr>`).join('')}</tbody></table></div><div class="dialog-total"><span>Total fictício</span><strong>${money(sale.total)}</strong></div><p>Este recibo ilustrativo não possui valor fiscal ou comercial.</p></div>`;dialog.showModal();}
 function addCustomer(){const input=document.querySelector('#newCustomer');const name=(input?.value||'').trim().replace(/\s+/g,' ');if(!name||name.length<3){toast('Digite um nome fictício de pelo menos 3 caracteres.');return;}if(state.createdCustomers>=2){toast('Limite de 2 clientes de teste atingido.');return;}if(state.customers.some(x=>x.name.toLowerCase()===name.toLowerCase())){toast('Esse nome já está na lista.');return;}state.customers.push({id:state.customers.length+1,name,points:0});state.createdCustomers++;render();toast('Cliente de teste incluído somente nesta simulação.');}
-segmentSelect.value=segment;resetDemo();
+const segmentGate=document.getElementById('segmentGate');
+const appLayout=document.querySelector('.app-layout');
+function showSegmentGate(){
+ appLayout.hidden=true;segmentGate.hidden=false;
+ history.replaceState({},'',location.pathname);
+ window.scrollTo({top:0,behavior:'instant'});
+}
+function enterSegment(which){
+ if(!Object.prototype.hasOwnProperty.call(SEGMENT_NAME,which))return;
+ segment=which;page='dashboard';
+ segmentGate.hidden=true;appLayout.hidden=false;
+ activeSegmentLabel.textContent=SEGMENT_NAME[which];
+ history.replaceState({},'',location.pathname+'?tipo='+encodeURIComponent(which));
+ resetDemo();
+ try{if(window.parent!==window)window.parent.postMessage({type:'skye-shop-segment',segment:which},location.origin);}catch{}
+ window.scrollTo({top:0,behavior:'instant'});
+}
+if(segment)enterSegment(segment);else showSegmentGate();
+document.querySelectorAll('[data-enter-segment]').forEach(btn=>btn.addEventListener('click',()=>enterSegment(btn.dataset.enterSegment)));
+document.getElementById('changeSegment').addEventListener('click',showSegmentGate);
 document.addEventListener('click',ev=>{
  const btn=ev.target.closest('button');if(!btn)return;
  if(btn.dataset.page){switchPage(btn.dataset.page);return;}
@@ -120,6 +140,6 @@ document.addEventListener('click',ev=>{
 document.querySelector('#nav').addEventListener('click',ev=>{const b=ev.target.closest('button[data-page]');if(b){switchPage(b.dataset.page);}});
 root.addEventListener('input',ev=>{if(ev.target.id==='pdvSearch'){filters.pdv=ev.target.value;render('pdvSearch');}if(ev.target.id==='stockSearch'){filters.estoque=ev.target.value;render('stockSearch');}});
 root.addEventListener('change',ev=>{if(ev.target.id==='stockFilter'){filters.stockStatus=ev.target.value;render();}});
-segmentSelect.addEventListener('change',()=>{segment=segmentSelect.value;history.replaceState({},'',location.pathname+'?tipo='+encodeURIComponent(segment));page='dashboard';resetDemo();toast(`Exemplos de ${SEGMENT_NAME[segment].toLowerCase()} carregados.`);});
+
 document.querySelector('#resetDemoTop').addEventListener('click',()=>{if(confirm('Reiniciar vendas, estoque e clientes fictícios desta visita?')){page='dashboard';resetDemo();toast('Simulação reiniciada.');}});
 document.querySelector('#dialogClose').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
