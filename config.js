@@ -4,7 +4,7 @@
  * O domínio pode ficar vazio até o endereço definitivo ser comprado.
  */
 window.SKYE_CONFIG = Object.freeze({
-  whatsapp: '5519998491844',
+  whatsapp: '5519981588431',
   email: '',
   instagram: '',
   domain: ''

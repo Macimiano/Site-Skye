@@ -13,14 +13,13 @@
   - **Equipe de vendas**: carteira, retornos, mensagens editáveis, pré-visualização e simulação de contato realizado.
 - A demonstração usa **somente dados fictícios** no navegador. Não possui backend, cadastro, integração, envio de mensagens ou persistência; recarregar a página reinicia a experiência. Não representa uma instalação funcional dos sistemas reais.
 - Foto original enviada da praça de **Socorro (SP)** continua na seção de visita presencial.
-- Mantido o canal de WhatsApp `(19) 99849-1844`.
+- Mantido o canal de WhatsApp `(19) 98158-8431`.
 
 ## Estrutura
 
 - `index.html` — site institucional.
 - `styles.css`, `script.js`, `config.js` — aparência e interações do site.
 - `demo.html`, `demo.css`, `demo.js` — demonstração independente, sem servidor.
-- `demonstracao-acaiteria/` — demonstração completa de açaiteria, estática, com dados fictícios e armazenamento local.
 - `privacidade.html` — informações sobre o formulário de contato.
 - `assets/` — logotipo original, fotos e prints reais.
 
@@ -48,13 +47,12 @@ No comando `vercel link`, **escolha o projeto da Skye já existente**, não um p
 2. Abra a tela real do Corte Certo e teste **+**, **−**, **Ajustar à tela**, **Próxima** e **Fechar**.
 3. Faça o mesmo com a tela de equipe comercial; confirme que a marca SPM não aparece.
 4. Use a **demonstração interativa** em `demo.html` e registre um pedido fictício; teste também os modelos de mensagem.
-5. Abra `/demonstracao-acaiteria/`, monte mais de um copo, edite e remova itens, confira o bloqueio comercial e restaure os exemplos.
-6. Confira no celular, em modo claro/escuro e os links de WhatsApp.
-7. Revise a política de privacidade e as autorizações de divulgação dos prints antes de campanhas públicas.
+5. Confira no celular, em modo claro/escuro e os links de WhatsApp.
+6. Revise a política de privacidade e as autorizações de divulgação dos prints antes de campanhas públicas.
 
 ## Canal comercial
 
-O WhatsApp está configurado em `config.js` como `5519998491844`. O formulário **não envia dados automaticamente**: ele prepara uma mensagem para abertura do WhatsApp, para o visitante revisar e enviar.
+O WhatsApp está configurado em `config.js` como `5519981588431`. O formulário **não envia dados automaticamente**: ele prepara uma mensagem para abertura do WhatsApp, para o visitante revisar e enviar.
 
 
 ## Música ambiente (nova versão)
