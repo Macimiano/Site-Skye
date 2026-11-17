@@ -30,3 +30,8 @@
 .hub-agro-footer{font-size:11px;color:#426f56;font-weight:700;margin-top:14px}
 @media(max-width:950px){.hub-shop-groups{grid-template-columns:1fr}}
 @media(max-width:650px){.hub-shop-picker{padding:18px;border-radius:16px}.hub-shop-groups{gap:14px;margin-top:21px}.hub-shop-group{padding:18px}.hub-shop-group h3{font-size:23px}.hub-shop-variants{grid-template-columns:1fr}.hub-variant{min-height:126px}.hub-shop-group-heading p{min-height:0}.hub-agro-action{min-height:134px}.hub-agro-icon{width:40px;height:40px}.hub-actions button,.hub-actions a{white-space:normal}}
+
+/* Quarta aba na central de demonstrações, sem sobrepor ações em telas menores. */
+.hub-nav button[data-demo="corte-certo"]{border-color:#b9a6d8}
+.hub-nav button[data-demo="corte-certo"][aria-selected="true"]{background:#49337b;border-color:#49337b;color:#fff}
+@media(max-width:800px){.hub-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.hub-nav button{min-width:0;white-space:normal;line-height:1.35;min-height:54px}}

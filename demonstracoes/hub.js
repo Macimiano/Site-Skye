@@ -1,7 +1,8 @@
 (()=>{'use strict';
 const demos={
  acaiteria:{label:'Açaíteria modelo',caption:'Pedidos e personalização de produtos',url:'../demonstracao-acaiteria/',title:'Demonstração de açaíteria com dados fictícios'},
- equipes:{label:'Equipe de vendas',caption:'Carteira, rotas, visitas, cotações, recuperação e desempenho',url:'../demonstracao-equipes/',title:'Demonstração limitada de equipe de vendas com dados fictícios'}
+ equipes:{label:'Equipe de vendas',caption:'Carteira, rotas, visitas, cotações, recuperação e desempenho',url:'../demonstracao-equipes/',title:'Demonstração limitada de equipe de vendas com dados fictícios'},
+ 'corte-certo':{label:'Corte Certo · Distribuidoras',caption:'Clientes, cotações, pedidos e estoque por lotes · dados fictícios',url:'../demonstracao-corte-certo/sistema.html',fullscreen:'../demonstracao-corte-certo/',title:'Corte Certo: demonstração limitada para distribuidoras com dados fictícios'}
 };
 const shopLabels={mercadinho:'Mercadinho',tabacaria:'Tabacaria',agropecuaria:'Agropecuária'};
 const frame=document.getElementById('hub-iframe'),loader=document.getElementById('hub-loader');
@@ -23,7 +24,7 @@ function openDemo(name,force=false){
  current=name;currentSegment=null;tabs(name);shopPicker.hidden=true;demoFrame.hidden=false;
  changeVersion.hidden=true;
  const info=demos[name];label.textContent=info.label;caption.textContent=info.caption;
- fullscreen.href=info.url;frame.title=info.title;loader.hidden=false;frame.src=info.url;
+ fullscreen.href=info.fullscreen||info.url;frame.title=info.title;loader.hidden=false;frame.src=info.url;
  changeHash(name);
 }
 function chooseShopSegment(which){

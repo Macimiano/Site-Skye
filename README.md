@@ -59,3 +59,19 @@ Projeto estático preparado para implantação no projeto Vercel já existente.
 - Não há login, envio de WhatsApp, importação de PDF, custos, download, aprovação administrativa, integração com estoque, geolocalização, banco, pagamentos ou emissão fiscal.
 - O produto comercial real não é um PDV: vendas são lançadas manualmente. Esta simulação respeita essa separação.
 - A publicação ocorre via atualização do **projeto Vercel existente** e validação em `/demonstracoes/#equipes` e `/demonstracao-equipes/`. A criação do ZIP não publica automaticamente.
+
+
+## v5.5 — Corte Certo / Distribuidoras
+
+- A página principal agora inclui uma quarta demonstração: **Distribuidoras e atacado (Corte Certo)**.
+- A central de demonstrações tem uma aba Corte Certo.
+- `demonstracao-corte-certo/sistema.html`: versão pública limitada **original** fornecida pelo usuário, sem alterações no JavaScript e com CSP de hashes preservada.
+- `demonstracao-corte-certo/index.html`: apresentação de tela inteira com identidade da Skye, botão para voltar às demonstrações e link comercial.
+- A demonstração original é uma simulação em memória, com dados fictícios, **25 alterações por sessão**, sete áreas autorizadas (visão geral, clientes, recuperação, estoque, cotações, pedidos e descontos), sem conexões de rede.
+- Não inclui servidor, banco, credenciais, arquivos internos do projeto Corte Certo nem módulo fiscal operacional.
+- Endereço após publicar: `/demonstracoes/#corte-certo` (central) ou `/demonstracao-corte-certo/` (tela inteira).
+- Não foi publicado automaticamente na Vercel. Atualize o projeto existente no seu repositório.
+
+### Verificação antes de divulgar
+
+Os arquivos HTML, caminhos de recursos, scripts JavaScript e hashes da política de segurança da demonstração do Corte Certo foram verificados. O teste visual automatizado não pôde ser executado por restrições do navegador neste ambiente. Após publicar na Vercel, teste em desktop e celular os links "Distribuidoras (Corte Certo)", "Abrir tela inteira" e o botão de reiniciar da demo. A Vercel e a conta do usuário não foram alteradas por este pacote.
