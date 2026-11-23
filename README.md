@@ -75,3 +75,14 @@ Projeto estático preparado para implantação no projeto Vercel já existente.
 ### Verificação antes de divulgar
 
 Os arquivos HTML, caminhos de recursos, scripts JavaScript e hashes da política de segurança da demonstração do Corte Certo foram verificados. O teste visual automatizado não pôde ser executado por restrições do navegador neste ambiente. Após publicar na Vercel, teste em desktop e celular os links "Distribuidoras (Corte Certo)", "Abrir tela inteira" e o botão de reiniciar da demo. A Vercel e a conta do usuário não foram alteradas por este pacote.
+
+
+## v5.6 — vídeo na abertura
+
+- A imagem de destaque do Corte Certo foi substituída por um vídeo enviado pelo proprietário da Skye, exibindo a simulação de gestão para agropecuárias.
+- Arquivo otimizado `assets/video/agropecuaria-demonstracao.mp4` (aprox. 2,9 MB), completo, com 2min43s, e cartaz `assets/video/agropecuaria-poster.webp`.
+- Reproduz automaticamente em loop, **sem som** (`autoplay muted playsinline loop`); o usuário pode pausar, ativar a narração e ampliar. A música ambiente da Skye pausa quando a narração é ativada e vice-versa.
+- Navegadores podem bloquear a reprodução automática em certas condições. O botão de reproduzir permanece disponível. Preferências de movimento reduzido e economia de dados são respeitadas.
+- A nova seção comunica corretamente que o vídeo exibe uma **demonstração com dados fictícios**, e não o painel real de um cliente.
+- O restante da página e as quatro demonstrações interativas foram preservados.
+- Após publicação, confira a reprodução no domínio em desktop, Android e iOS, incluindo orientação do dispositivo e modo de economia de dados. O ZIP não publica sozinho na Vercel.

@@ -70,12 +70,22 @@
 </div>
 
 <div class="hero-visual hero-visual-real">
-<button class="hero-real-window visual-expand-trigger" type="button" data-open-gallery="0" aria-label="Ampliar tela real de visão geral do Corte Certo">
-<div class="hero-real-window-top"><span><i></i><i></i><i></i></span><strong>PROJETO REAL · CORTE CERTO</strong></div>
-<img alt="Tela real do Corte Certo com visão geral de vendas, carteira de clientes e indicadores" fetchpriority="high" height="473" src="assets/galeria/corte-certo-visao.webp" width="1760"/>
-<span class="hero-preview-zoom" aria-hidden="true">⤢ Ver em tamanho maior</span>
-</button>
-<div class="hero-real-footnote"><svg aria-hidden="true" class="ic"><use href="#i-check"></use></svg> Sistema real. Clique na imagem para ver os detalhes.</div>
+<div class="hero-real-window hero-video-window">
+<div class="hero-real-window-top"><span><i></i><i></i><i></i></span><strong>VÍDEO DE DEMONSTRAÇÃO · GESTÃO PARA AGROPECUÁRIAS</strong></div>
+<video id="skye-hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/video/agropecuaria-poster.webp" width="1280" height="612" aria-label="Vídeo demonstrativo do sistema de gestão para agropecuárias, com produtos e vendas fictícios">
+<source src="assets/video/agropecuaria-demonstracao.mp4" type="video/mp4"/>
+Seu navegador não oferece suporte à reprodução deste vídeo.
+</video>
+<div class="hero-video-toolbar" aria-label="Controles do vídeo de demonstração">
+<span class="hero-video-indicator"><span aria-hidden="true" class="hero-video-pulse"></span> Demonstração em vídeo</span>
+<div class="hero-video-actions">
+<button id="skye-video-play" type="button" aria-label="Pausar vídeo" title="Pausar vídeo"><span aria-hidden="true">Ⅱ</span><span class="hero-video-control-label">Pausar</span></button>
+<button id="skye-video-audio" type="button" aria-label="Ativar narração" aria-pressed="false" title="Ativar narração"><span aria-hidden="true">♪</span><span class="hero-video-control-label">Ouvir narração</span></button>
+<button id="skye-video-fullscreen" type="button" aria-label="Ampliar vídeo para tela inteira" title="Assistir em tela inteira"><span aria-hidden="true">⛶</span><span class="hero-video-control-label">Ampliar</span></button>
+</div>
+</div>
+</div>
+<div class="hero-real-footnote"><svg aria-hidden="true" class="ic"><use href="#i-check"></use></svg> Vídeo com dados fictícios. Inicia automaticamente, sem som.</div>
 </div>
 </div>
 <div class="hero-bottom"><div class="container"><span>PROJETOS REAIS</span><span class="hero-bottom-rule"></span><span>SISTEMAS CRIADOS PARA DIFERENTES ROTINAS</span></div></div>
@@ -213,5 +223,6 @@
   <button class="ambient-toggle" id="ambient-toggle" type="button" aria-label="Ativar música ambiente" aria-pressed="false" title="Ativar música ambiente suave"><span class="ambient-note" aria-hidden="true">♫</span><span class="ambient-caption">Música ambiente</span></button>
 </div>
 <script defer src="ambient.js"></script>
+<script defer src="hero-video.js"></script>
 </body>
 </html>
