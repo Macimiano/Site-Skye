@@ -105,3 +105,10 @@ Como este site usa HTML e JavaScript puros, **não precisa** instalar Next.js, R
 O arquivo `demonstracao-corte-certo/sistema.html` mantém seu CSP e sandbox de segurança intactos; a visualização da página externa de apresentação é registrada. A demonstração da açaíteria continua entregue por rewrite externo e não recebe a inserção do script feita nos arquivos locais.
 
 **Observação:** o carregamento do script e a contagem real de visitas só podem ser confirmados após a publicação na Vercel com Analytics habilitado.
+
+
+## Atualização v5.9 — vídeo legendado
+
+- Vídeo do topo substituído pela versão legendada enviada pelo cliente.
+- O player mantém a proporção completa 1280×696, sem zoom ou corte, para preservar as legendas incorporadas na parte inferior.
+- Autoplay sem som, áudio opcional, pausa e tela cheia preservados.
