@@ -86,3 +86,22 @@ Os arquivos HTML, caminhos de recursos, scripts JavaScript e hashes da política
 - A nova seção comunica corretamente que o vídeo exibe uma **demonstração com dados fictícios**, e não o painel real de um cliente.
 - O restante da página e as quatro demonstrações interativas foram preservados.
 - Após publicação, confira a reprodução no domínio em desktop, Android e iOS, incluindo orientação do dispositivo e modo de economia de dados. O ZIP não publica sozinho na Vercel.
+
+
+## Versão 5.7 — Vercel Web Analytics
+
+Foi incluído o script oficial de análise de tráfego para sites estáticos na página inicial, na política de privacidade e nas páginas públicas das demonstrações de lojas, equipe de vendas, central de demonstrações e apresentação do Corte Certo.
+
+### Ativação no painel da Vercel
+
+1. Abra o projeto atual da Skye no dashboard da Vercel.
+2. Acesse **Analytics** e clique em **Enable**, se ainda não estiver habilitado.
+3. Faça um novo deploy do **mesmo projeto** usando os arquivos deste ZIP.
+4. Visite o site publicado no domínio oficial e retorne ao painel **Analytics** para consultar visualizações e visitantes.
+5. Se aparecer erro 404 para `/_vercel/insights/script.js`, confira se Analytics está habilitado no projeto e faça um novo deploy.
+
+Como este site usa HTML e JavaScript puros, **não precisa** instalar Next.js, React nem o pacote `@vercel/analytics`.
+
+O arquivo `demonstracao-corte-certo/sistema.html` mantém seu CSP e sandbox de segurança intactos; a visualização da página externa de apresentação é registrada. A demonstração da açaíteria continua entregue por rewrite externo e não recebe a inserção do script feita nos arquivos locais.
+
+**Observação:** o carregamento do script e a contagem real de visitas só podem ser confirmados após a publicação na Vercel com Analytics habilitado.
