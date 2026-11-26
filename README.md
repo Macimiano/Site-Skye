@@ -1,3 +1,18 @@
+# Skye Gestão e Inovação — v6.0 / Seção Sobre nós
+
+Esta versão acrescenta uma seção institucional de apresentação humana à página inicial, após a seção de visitas presenciais. Inclui navegação no menu e rodapé e respeita o tema claro/escuro existente.
+
+**Importante antes da divulgação:** os textos de Marcelo e Fran são uma apresentação editorial inicial, não uma biografia histórica. Para contar a trajetória real com fidelidade, substituir os textos da seção `id="sobre"` em `index.html` depois de receber as histórias e, opcionalmente, fotos autorizadas. Nenhuma data de fundação, profissão, papel societário ou fato biográfico foi inventado.
+
+Perguntas úteis para completar os textos:
+- Como surgiu a ideia da Skye e quando começou?
+- Que experiência cada um tinha antes?
+- O que Marcelo faz nos projetos e o que Fran faz?
+- Qual situação ou cliente levou vocês a perceber que sistemas sob medida eram necessários?
+- Há alguma foto dos dois que queiram divulgar?
+
+---
+
 # Skye Gestão e Inovação — site v5.4 (demonstração de vendedores ampliada)
 
 Projeto estático preparado para implantação no projeto Vercel já existente.

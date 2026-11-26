@@ -588,3 +588,34 @@ p{line-height:1.72}
  .hero-video-actions button{width:33px;min-width:33px;padding:6px}
  .hero-video-window video{max-height:none;height:auto;aspect-ratio:1280/696;object-fit:contain;object-position:center center;transform:none}
 }
+
+/* Skye v6.0 — seção institucional Sobre nós: pessoas antes das telas. */
+.about-section{position:relative;background:var(--page-bg);color:var(--page-fg);padding:107px 0 99px;overflow:hidden}
+.about-section::before{content:"";position:absolute;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(62,142,240,.07),transparent 68%);right:-165px;top:-215px;pointer-events:none}
+.about-heading{display:grid;grid-template-columns:1.13fr .87fr;gap:56px;align-items:end;margin-bottom:32px;position:relative}
+.about-heading .eyebrow{margin-bottom:15px;color:var(--page-blue)}
+.about-heading h2{color:var(--page-heading);font-size:clamp(31px,3.65vw,49px);line-height:1.15;letter-spacing:-.052em}
+.about-heading h2 span{color:var(--page-blue)}
+.about-heading>p{font-size:15px;line-height:1.85;color:var(--page-muted);max-width:460px;padding-bottom:5px}
+.about-layout{display:grid;grid-template-columns:.93fr 1.07fr;gap:20px;align-items:stretch}
+.about-manifesto{position:relative;overflow:hidden;border-radius:23px;min-height:310px;background:linear-gradient(145deg,#0d325f,#081d39);color:#fff;padding:37px 37px 31px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(152,198,248,.16)}
+.about-manifesto::after{content:"";position:absolute;width:255px;height:255px;right:-96px;top:-96px;border:1px solid rgba(251,210,98,.19);border-radius:50%;box-shadow:0 0 0 52px rgba(255,213,105,.04);pointer-events:none}
+.about-manifesto-mark{position:absolute;font:800 96px/1 Georgia,serif;top:11px;left:31px;color:#fbd165;opacity:.87}
+.about-manifesto p{font:600 clamp(19px,2.1vw,26px)/1.5 'Manrope','DM Sans',sans-serif;letter-spacing:-.025em;position:relative;margin-top:47px;max-width:465px}
+.about-manifesto-bottom{position:relative;display:flex;align-items:center;gap:10px;color:#c2d6f0;font-size:12px;font-weight:650;margin-top:33px}
+.about-gold-line{display:block;width:24px;height:3px;border-radius:3px;background:#ffd163}
+.about-team{display:grid;grid-template-rows:repeat(2,1fr);gap:16px}
+.about-person{display:grid;grid-template-columns:82px 1fr;gap:25px;align-items:center;background:var(--page-card);border:1px solid var(--page-border);border-radius:21px;padding:28px 30px;box-shadow:0 12px 30px var(--page-shadow)}
+.about-monogram{height:80px;width:80px;display:grid;place-items:center;border-radius:22px;background:linear-gradient(130deg,#dbeaff,#b7d3fc);color:#0e3c79;font:850 40px/1 'Manrope',sans-serif;box-shadow:inset 0 0 0 1px rgba(16,72,136,.09)}
+.about-person-fran .about-monogram{background:linear-gradient(130deg,#fff1c7,#ffe4a6);color:#73500a}
+.about-person-eyebrow{display:block;color:var(--page-blue);font-size:9px;letter-spacing:.125em;font-weight:850;margin-bottom:6px}
+.about-person h3{font-size:24px;line-height:1.25;color:var(--page-heading);letter-spacing:-.035em;margin:0 0 7px}
+.about-person p{font-size:13px;line-height:1.65;color:var(--page-muted)}
+.about-footer{margin-top:25px;padding-top:21px;border-top:1px solid var(--page-border);display:flex;align-items:center;gap:19px 28px;flex-wrap:wrap}
+.about-footer>span{font-size:12px;font-weight:650;color:var(--page-muted);display:flex;align-items:center;gap:7px}
+.about-footer .ic{width:15px;height:15px;color:var(--page-blue)}
+.about-footer>a{margin-left:auto;font-size:13px;font-weight:850;color:var(--page-blue);display:inline-flex;align-items:center;gap:9px}
+.about-footer>a .ic{width:17px;height:17px}
+@media(max-width:1080px){.about-heading{gap:30px}.about-layout{grid-template-columns:.95fr 1.05fr}.about-person{padding:24px 20px;grid-template-columns:68px 1fr;gap:17px}.about-monogram{height:68px;width:68px;font-size:34px}}
+@media(max-width:850px){.about-heading{grid-template-columns:1fr;gap:15px}.about-layout{grid-template-columns:1fr}.about-manifesto{min-height:255px}.about-team{grid-template-columns:1fr 1fr;grid-template-rows:auto}.about-person{display:block;min-height:245px}.about-person .about-monogram{margin-bottom:17px}}
+@media(max-width:600px){.about-section{padding:77px 0 72px}.about-heading h2{font-size:clamp(30px,8vw,40px)}.about-heading>p{font-size:14px}.about-manifesto{min-height:0;padding:31px 27px 26px}.about-manifesto-mark{top:8px;left:23px}.about-manifesto p{font-size:20px;margin-top:49px}.about-team{grid-template-columns:1fr}.about-person{display:grid;grid-template-columns:62px 1fr;gap:17px;min-height:0;padding:20px}.about-person .about-monogram{margin:0;width:62px;height:62px;font-size:30px;border-radius:17px}.about-person h3{font-size:20px}.about-footer{gap:13px 18px}.about-footer>a{width:100%;margin-left:0;margin-top:7px}}
