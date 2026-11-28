@@ -1,0 +1,126 @@
+.wine-app .workspace-label{font-size:11px}
+.wine-app .eyebrow{font-size:12px}
+.wine-app .nav-item{font-size:14px}
+.wine-app .demo-bar{font-size:13px}
+.wine-app .demo-bar button{font-size:13px}
+.wine-app .app-header .eyebrow{font-size:11px}
+.wine-app .stats article>span{font-size:14px}
+.wine-app .stats small{font-size:12px;line-height:1.4}
+.wine-app .stats article>strong{font-size:26px}
+.wine-app .badge{font-size:13px}
+.wine-app .product-card .subtle{font-size:13px}
+.wine-app .product-card h3{font-size:17px}
+.wine-app .subtle,.wine-app .small-note{font-size:14px}
+.wine-app .sidebar-bottom a,.wine-app .sidebar-bottom button{font-size:13px}
+.wine-app .empty p{font-size:16px}
+.wine-app th{font-size:14px}
+.wine-app td{font-size:14px}
+.wine-app .table-scroll{overscroll-behavior-x:contain}
+.wine-app .stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+.wine-date{font-size:13px;color:var(--muted);margin-top:9px;margin-bottom:0}
+.wine-home-heading{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px}
+.wine-home-heading h2{font-size:25px;margin-bottom:6px}
+.wine-home-heading p{margin:0;color:var(--muted)}
+.wine-summary-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:22px}
+.wine-quick-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}
+.wine-quick-actions button,.wine-quick-actions a{font-size:14px}
+.wine-metric-note{padding:14px 17px;border-left:3px solid var(--blue);background:#eef4fc;border-radius:0 9px 9px 0;margin:18px 0;font-size:14px;color:#415c7d}
+.wine-low-list{list-style:none;padding:0;margin:0}
+.wine-low-list li{display:flex;justify-content:space-between;gap:15px;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}
+.wine-low-list small{display:block;margin-top:3px;font-size:13px}
+.wine-low-list strong{white-space:nowrap}
+.wine-toolbar-wrap{flex-wrap:wrap}
+.wine-filters{display:flex;gap:8px;flex-wrap:wrap}
+.wine-sale{display:grid;grid-template-columns:minmax(0,1fr) 355px;gap:24px;align-items:start}
+.wine-sale .order-summary{position:sticky;top:20px}
+.wine-products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.wine-product{border:1px solid var(--line);background:white;border-radius:13px;padding:20px;text-align:left;color:var(--ink);min-width:0}
+.wine-product:hover{border-color:#92b5e8;box-shadow:0 5px 20px #1165da09}
+.wine-product-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}
+.wine-product .wine-product-symbol{color:var(--blue);background:#edf4ff;padding:9px;border-radius:10px;display:grid;place-items:center}
+.wine-product h3{margin:0 0 10px;font-size:18px}
+.wine-product p{font-size:14px;color:var(--muted);margin:0 0 14px}
+.wine-product-price{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;color:#184e94}
+.wine-product-price span{font-size:13px;color:var(--muted)}
+.wine-products .badge{font-size:12px;white-space:normal}
+.wine-order-line{display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-size:14px}
+.wine-order-line:first-child{padding-top:0}
+.wine-order-line h3{font-size:15px;margin:0 0 4px}
+.wine-order-line small{display:block;font-size:13px;line-height:1.5}
+.wine-order-line>div:last-child{text-align:right;white-space:nowrap}
+.wine-order-line .danger-text{font-size:12px;padding:4px 0}
+.wine-order-line .unit-conversion{color:#325d93;font-size:13px;margin:6px 0 0}
+.wine-order-empty{color:var(--muted);font-size:14px;padding:5px 0 20px}
+.wine-deposit-total{background:#fff5dc;border-radius:8px;padding:13px 12px;margin-top:16px!important;color:#715014}
+.wine-deposit-total dt{color:#715014}
+.wine-deposit-total small{display:block;white-space:normal;font-size:12px;max-width:170px}
+.wine-order-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.wine-order-actions>.text-link{margin:0 auto}
+.wine-step-list{display:flex;flex-wrap:wrap;gap:10px;padding:18px 0;color:#6a7f99;font-size:13px}
+.wine-step-list span{padding:7px 11px;border-radius:6px;background:#eaf0f7}
+.wine-step-list span.active{background:#dceaff;color:#1c58a4;font-weight:600}
+.wine-order-details p{margin:0 0 10px;font-size:15px}
+.wine-order-details p:last-child{margin-bottom:0}
+.wine-receipts{margin-top:23px;border-top:1px solid var(--line);padding-top:20px}
+.wine-receipts h3{font-size:15px}
+.wine-receipts>div{padding:12px 0;border-bottom:1px solid var(--line)}
+.wine-receipts .row{align-items:flex-start;font-size:14px}
+.wine-receipts small{font-size:12px;display:block;margin-top:4px}
+.wine-receipts button{font-size:12px}
+.wine-presentations{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.wine-presentation-option{display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:9px;padding:15px;margin:0}
+.wine-presentation-option:has(input:checked){border-color:#83afea;background:#edf4ff}
+.wine-presentation-option input{width:18px;height:18px;margin:0;flex-shrink:0;accent-color:var(--blue)}
+.wine-presentation-option>span{flex:1}
+.wine-presentation-option small{display:block;font-size:13px;margin-top:3px}
+.wine-presentation-option strong{font-size:16px}
+.wine-presentation-note{background:#edf4ff;padding:13px 15px;border-radius:8px;font-size:14px;color:#3b608f;margin:18px 0}
+.wine-form-section{border-top:1px solid var(--line);padding-top:20px;margin-top:22px}
+.wine-form-section h3{margin-bottom:15px}
+.presentation-editor{border:1px solid var(--line);padding:16px;border-radius:10px;margin-bottom:14px;background:#f8fafd}
+.presentation-editor .row{margin-bottom:15px}
+.presentation-editor .row h3{margin:0;font-size:15px}
+.presentation-editor .form-grid{gap:0 15px}
+.presentation-editor label{margin-bottom:13px}
+.presentation-editor label:last-child{margin-bottom:0}
+.presentation-editor .danger-text{font-size:13px}
+.wine-returnable-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:21px;margin-bottom:18px}
+.wine-returnable-card h3{margin-bottom:7px}
+.wine-returnable-card .row{align-items:flex-start}
+.wine-returnable-numbers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:19px 0}
+.wine-returnable-numbers span{font-size:13px;color:var(--muted);display:block}
+.wine-returnable-numbers strong{font-size:24px;display:block;margin-top:3px;color:var(--ink)}
+.wine-returnable-actions{display:flex;gap:10px;flex-wrap:wrap}
+.wine-returnable-actions button{font-size:14px}
+.wine-liability-note{background:#fff5dc;border:1px solid #f1dfae;color:#715014;border-radius:10px;padding:16px;font-size:14px;line-height:1.6;margin-bottom:22px}
+.wine-delivery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.wine-delivery-card{background:white;border:1px solid var(--line);border-radius:13px;padding:21px;min-width:0}
+.wine-delivery-card h3{font-size:17px;margin:15px 0 8px}
+.wine-delivery-card p{font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.wine-delivery-card .primary,.wine-delivery-card .secondary{font-size:14px;margin-top:10px}
+.wine-history-event{padding:18px 0;border-bottom:1px solid var(--line)}
+.wine-history-event>div{display:flex;justify-content:space-between;gap:15px;margin-bottom:6px}
+.wine-history-event p{font-size:14px;color:var(--muted);margin:0 0 5px;white-space:pre-line;overflow-wrap:anywhere}
+.wine-history-event small{font-size:12px}
+.wine-inline-actions{display:flex;gap:15px;flex-wrap:wrap;margin-top:14px}
+.wine-inline-actions button{font-size:14px}
+.wine-count-note{padding:12px;background:#f0f4fa;border-radius:8px;font-size:14px;margin-bottom:18px}
+.wine-cash-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:24px}
+.wine-cash-grid article{background:white;border:1px solid var(--line);padding:20px;border-radius:12px}
+.wine-cash-grid article>span{font-size:14px;color:var(--muted)}
+.wine-cash-grid strong{display:block;font-size:26px;margin-top:11px}
+.wine-cash-grid small{display:block;font-size:13px;margin-top:6px;color:var(--muted)}
+.wine-paid{background:#e8f5ec;padding:13px;border-radius:9px;color:#1d6747;font-size:15px;text-align:center}
+.wine-stock-badge{font-size:13px!important}
+.wine-app .app-footer{font-size:12px}
+.wine-notice-actions{display:flex;gap:12px;align-items:center}
+.wine-notice-actions a{font-size:13px;font-weight:600}
+.wine-app .dialog-heading h2{font-size:23px}
+.wine-app .badge.cancelled{color:#962b3d;background:#fce8ec}
+.wine-app .badge.confirmed{background:#fff0ca;color:#785600}
+.wine-app .badge.completed{background:#e7f3ec;color:#216746}
+.wine-app .badge.out_for_delivery{background:#e8efff;color:#2856a6}
+.wine-app .badge.delivered{background:#e7f3ec;color:#216746}
+@media(max-width:1250px){.wine-sale{grid-template-columns:minmax(0,1fr) 315px;gap:18px}.wine-products{gap:12px}.wine-product{padding:16px}.wine-product h3{font-size:16px}.wine-app .stats article>strong{font-size:23px}.wine-delivery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wine-app .sale-layout .toolbar{flex-direction:column}}
+@media(max-width:960px){.wine-summary-grid{grid-template-columns:1fr}.wine-app .stats{grid-template-columns:repeat(2,minmax(0,1fr))}.wine-sale{grid-template-columns:minmax(0,1fr) 300px}.wine-products{grid-template-columns:1fr}.wine-home-heading{align-items:flex-start}.wine-app .sidebar .nav-label-desktop,.wine-app .sidebar .nav-label-mobile{display:none}.wine-cash-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wine-app .content>.toolbar{flex-wrap:wrap}}
+@media(max-width:730px){.wine-app .app-header{align-items:flex-start}.wine-app .app-header h1{font-size:23px}.wine-app .app-header .eyebrow{font-size:10px;max-width:150px}.wine-app .app-header .header-controls{align-items:center}.wine-app .demo-bar{font-size:11px}.wine-app .demo-bar button{font-size:11px}.wine-notice-actions{gap:10px}.wine-notice-actions a{font-size:11px}.wine-notice-actions .icon{display:none}.wine-date{font-size:12px}.wine-app .nav-item{padding:8px 12px;min-width:76px}.wine-app .sidebar .nav-label-desktop{display:none!important}.wine-app .sidebar .nav-label-mobile{display:block;font-size:12px}.wine-app .stats article>span{font-size:13px}.wine-app .stats article>strong{font-size:24px}.wine-app .stats small{font-size:12px}.wine-home-heading{flex-direction:column;gap:14px}.wine-home-heading h2{font-size:23px}.wine-home-heading p{font-size:15px}.wine-quick-actions{gap:9px}.wine-quick-actions button{font-size:14px;padding:11px 13px}.wine-sale{grid-template-columns:1fr}.wine-sale .order-summary{position:static;order:0}.wine-products{grid-template-columns:repeat(2,minmax(0,1fr))}.wine-product{padding:16px 13px}.wine-product h3{font-size:16px;min-height:43px}.wine-product p{font-size:13px}.wine-product-price{align-items:flex-start;flex-direction:column;gap:4px}.wine-product-top{align-items:flex-start;margin-bottom:12px}.wine-product-symbol .icon{width:18px;height:18px}.wine-product .badge{font-size:11px}.wine-step-list{font-size:12px;gap:7px}.wine-step-list span{padding:6px 9px}.wine-app .order-topline{flex-wrap:wrap}.wine-app .order-topline>span{justify-content:flex-start;text-align:left}.wine-delivery-grid{grid-template-columns:1fr}.wine-app .stats{gap:12px}.wine-cash-grid{grid-template-columns:1fr}.wine-cash-grid article{padding:19px}.wine-returnable-numbers{gap:10px}.wine-returnable-numbers strong{font-size:24px}.wine-returnable-numbers span{font-size:12px}.wine-returnable-card{padding:18px}.wine-returnable-actions{flex-direction:column}.wine-returnable-actions button{width:100%}.wine-app .dialog-heading h2{font-size:21px}.presentation-editor{padding:14px}.wine-form-section .row{align-items:flex-start}.wine-history-event>div{flex-direction:column;gap:5px}.wine-app .role-select select{font-size:14px}.wine-app .header-controls .primary{max-width:115px}.wine-order-details p{font-size:14px}.wine-app .content .section-heading>p{font-size:14px}}

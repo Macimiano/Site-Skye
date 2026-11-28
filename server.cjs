@@ -8,6 +8,7 @@ const port = Number(process.env.PORT || 3000);
 const mime = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
+  '.mjs': 'text/javascript; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
@@ -28,7 +29,11 @@ http.createServer((req, res) => {
   if (pathname === '/') pathname = '/index.html';
   if (pathname === '/demonstracao-acaiteria' || pathname === '/demonstracao-acaiteria/') pathname = '/demonstracao-acaiteria/index.html';
   // Only allow public static routes; keep configuration and server sources private.
-  if (!/^\/(?:index\.html|privacidade\.html|demo\.html|styles\.css|script\.js|config\.js|demo\.css|demo\.js|ambient\.css|ambient\.js|assets\/[a-zA-Z0-9_./\-]+|demonstracao-acaiteria\/(?:index\.html|style\.css|config\.js|app\.js))$/.test(pathname)) {
+  if (/^\/demonstracao-(restaurante|adega|petshop|hospedagem)\/?$/.test(pathname)) pathname = pathname.replace(/\/?$/, "/index.html");
+  const pilotFile = /^\/demonstracao-(restaurante|adega|petshop|hospedagem)\/(?:index\.html|[a-z]+\.(?:css|mjs)|src\/[a-z-]+\.mjs|assets\/(?:logo-skye\.png|favicon\.svg))$/.test(pathname);
+  if (pathname === "/demonstracoes" || pathname === "/demonstracoes/") pathname = "/demonstracoes/index.html";
+  const hubFile = ["/demonstracoes/index.html", "/demonstracoes/hub.css", "/demonstracoes/hub.js"].includes(pathname);
+  if (!pilotFile && !hubFile && !/^\/(?:index\.html|privacidade\.html|demo\.html|styles\.css|script\.js|config\.js|demo\.css|demo\.js|ambient\.css|ambient\.js|assets\/[a-zA-Z0-9_./\-]+|demonstracao-acaiteria\/(?:index\.html|style\.css|config\.js|app\.js))$/.test(pathname)) {
     res.writeHead(404); return res.end('Não encontrado');
   }
   const file = path.resolve(root, '.' + pathname);
