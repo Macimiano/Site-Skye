@@ -3,10 +3,10 @@ const demos={
  acaiteria:{label:'Açaíteria modelo',caption:'Pedidos e personalização de produtos',url:'../demonstracao-acaiteria/',title:'Demonstração de açaíteria com dados fictícios'},
  equipes:{label:'Equipe de vendas',caption:'Carteira, rotas, visitas, cotações, recuperação e desempenho',url:'../demonstracao-equipes/',title:'Demonstração limitada de equipe de vendas com dados fictícios'},
  'corte-certo':{label:'Corte Certo · Distribuidoras',caption:'Clientes, cotações, pedidos e estoque por lotes · dados fictícios',url:'../demonstracao-corte-certo/sistema.html',fullscreen:'../demonstracao-corte-certo/',title:'Corte Certo: demonstração limitada para distribuidoras com dados fictícios'},
- restaurante:{label:'Restaurante e lanchonete',caption:'Comandas, cozinha e caixa · simulação limitada',url:'../demonstracao-restaurante/',title:'Demonstração limitada de restaurante com dados fictícios'},
- adega:{label:'Adega e loja de bebidas',caption:'Bebidas, vendas, estoque e reposição · simulação limitada',url:'../demonstracao-adega/',title:'Demonstração limitada de adega com dados fictícios'},
- petshop:{label:'Pet shop',caption:'Agenda de banho e tosa, serviços e clientes · simulação limitada',url:'../demonstracao-petshop/',title:'Demonstração limitada de pet shop com dados fictícios'},
- hotel:{label:'Hotel e pousada',caption:'Reservas, check-in e quartos · simulação limitada',url:'../demonstracao-hotel/',title:'Demonstração limitada de hotel com dados fictícios'}
+ restaurante:{label:'Restaurante e lanchonete',caption:'Comandas, cozinha e caixa · simulação limitada',url:'demonstracao-restaurante/index.html',title:'Demonstração limitada de restaurante com dados fictícios'},
+ adega:{label:'Adega e loja de bebidas',caption:'Bebidas, vendas, estoque e reposição · simulação limitada',url:'demonstracao-adega/index.html',title:'Demonstração limitada de adega com dados fictícios'},
+ petshop:{label:'Pet shop',caption:'Agenda de banho e tosa, serviços e clientes · simulação limitada',url:'demonstracao-petshop/index.html',title:'Demonstração limitada de pet shop com dados fictícios'},
+ hotel:{label:'Hotel e pousada',caption:'Reservas, check-in e quartos · simulação limitada',url:'demonstracao-hospedagem/index.html',title:'Demonstração limitada de hotel com dados fictícios'}
 };
 const shopLabels={mercadinho:'Mercadinho',tabacaria:'Tabacaria',agropecuaria:'Agropecuária'};
 const frame=document.getElementById('hub-iframe'),loader=document.getElementById('hub-loader');
