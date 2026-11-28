@@ -145,3 +145,5 @@
 .table-grid .table-card>div{flex-wrap:wrap;justify-content:flex-start;gap:6px}
 @media(max-width:760px){.vitrine-intro{grid-template-columns:auto minmax(0,1fr)}.vitrine-intro>button{grid-column:1/-1;justify-self:start}}
 @media(max-width:380px){.table-grid{gap:8px}.table-grid .table-card{padding:10px}.table-grid .table-card .badge{white-space:normal}}
+
+.wine-batch-actions,.wine-client-actions{display:flex;gap:8px;flex-wrap:wrap}.wine-batch-actions{min-width:136px}.wine-batch-actions .secondary{padding:7px 10px;min-height:36px}.wine-batch-actions .wine-loss{color:#8c332a;border-color:#e3b9b3}.wine-client-list{display:grid;gap:10px}.wine-client-card{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:14px}.wine-client-card h3,.wine-client-card p{margin:0 0 4px}.wine-client-actions button{padding:8px 12px;min-height:44px}

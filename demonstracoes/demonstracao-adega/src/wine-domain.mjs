@@ -153,9 +153,25 @@ export function dispatchWine(state,c) {
     case 'SAVE_CLIENT': {
       const name=String(c.name||'').trim(), recordId=String(c.clientId||'').trim();
       if(!["gestao","caixa"].includes(c.actor)||!name||!recordId||name.length>100)throw new Error('Informe o nome do cliente com um perfil autorizado.');
-      const record={id:recordId,name,contact:String(c.contact||'').trim().slice(0,120)};
+      const previous=(s.clients||[]).find(x=>x.id===recordId);
+      const record={...previous,id:recordId,name,contact:String(c.contact||'').trim().slice(0,120)};
       s.clients=(s.clients||[]).filter(x=>x.id!==record.id).concat(record);
       break;
+    }
+    case 'DELETE_CLIENT':
+    case 'SET_CLIENT_OFFER': {
+      manager(c);const client=(s.clients||[]).find(x=>x.id===c.clientId);if(!client)fail('Cliente não encontrado.');
+      if(c.type==='DELETE_CLIENT')s.clients=s.clients.filter(x=>x.id!==c.clientId);
+      else {integer(c.percent,'Desconto percentual',0,50);client.offerPercent=c.percent;}
+      audit(s,c,{clientId:c.clientId});break;
+    }
+    case 'REDEEM_CLIENT_OFFER': {
+      sales(c);open(s);const order=orderFor(s,c.orderId);
+      const client=(s.clients||[]).find(x=>x.id===order.clientId);
+      if(!client?.offerPercent||!['confirmed','completed'].includes(order.stage)||order.discountCents||s.receipts.some(r=>r.orderId===order.id))fail('Oferta indisponível para esta venda.');
+      const amount=Math.round(order.items.reduce((sum,i)=>sum+i.totalCents,0)*client.offerPercent/100);
+      if(!amount)fail('A venda precisa ter produtos para resgatar a oferta.');
+      order.discountCents=amount;client.offerPercent=0;audit(s,c,{amountCents:amount,reason:'Oferta de fidelidade'});break;
     }
     case 'CREATE_ORDER': {
       const client=(s.clients||[]).find(x=>x.id===c.clientId);
