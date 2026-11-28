@@ -7,7 +7,7 @@ async function backend(path,command){
  const result=await response.json();if(!response.ok)throw Error(result.error||'Conector indisponível.');return result;
 }
 const store=connected?{read:()=>backend('state'),transact:c=>backend('command',c)}:createHotelStore(), main=document.querySelector('#hotel'),sheet=document.querySelector('#sheet'), editor=document.querySelector('#editor'), role=document.querySelector('#role');
-let s=await store.read(), tab='Hoje', period=s.businessDate, opened='',pending='',target='',timer;
+let s=await store.read(), tab='Calendário', calendarDay=s.businessDate, period=s.businessDate, opened='',pending='',target='',timer;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=v=>(v/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const day=d=>d.split('-').reverse().join('/');
@@ -17,7 +17,7 @@ const empty=text=>`<p class="hotel-muted">${esc(text)}</p>`;
 const panel=(title,body)=>`<section class="hotel-panel"><h3>${esc(title)}</h3>${body}</section>`;
 const selected=()=>s.reservations.find(r=>r.id===opened);
 const active=r=>['Confirmada','Hospedado'].includes(r.status);
-const labelAction={reviseExternal:'Simular alteração de datas',cancelExternal:'Simular cancelamento no canal',settle:'Conciliar repasse',reserve:'Nova reserva',simulate:'Importar reserva simulada',change:'Alterar reserva / atribuir quarto',checkin:'Check-in',checkout:'Check-out',consume:'Lançar consumo',receive:'Receber valor',cancel:'Cancelar reserva',refund:'Estornar crédito',block:'Bloquear quarto',unblock:'Liberar bloqueio',clean:'Atualizar limpeza',date:'Avançar data',rate:'Alterar diária',sync:'Processar fila local',reset:'Reiniciar hospedagem'};
+const labelAction={guest:'Cadastro de hóspede',reviseExternal:'Simular alteração de datas',cancelExternal:'Simular cancelamento no canal',settle:'Conciliar repasse',reserve:'Nova reserva',simulate:'Importar reserva simulada',change:'Alterar reserva / atribuir quarto',checkin:'Check-in',checkout:'Check-out',consume:'Lançar consumo',receive:'Receber valor',cancel:'Cancelar reserva',refund:'Estornar crédito',block:'Bloquear quarto',unblock:'Liberar bloqueio',clean:'Atualizar limpeza',date:'Avançar data',rate:'Alterar diária',sync:'Processar fila local',reset:'Reiniciar hospedagem'};
 let guestQuery='',statusFilter='';
 function filteredReservations(){
  const query=guestQuery.trim().toLocaleLowerCase('pt-BR');
@@ -27,7 +27,7 @@ function reservationSearch(){
  return `<div class="hotel-actions hotel-filters"><label>Hóspede, código ou quarto <input type="search" id="guest-search" value="${esc(guestQuery)}"></label>${select('Situação','reservationStatus',[['','Todas'],...choices(['Confirmada','Hospedado','Encerrada','Cancelada'])],statusFilter)}</div><div id="res-results" aria-live="polite">${filteredReservations()}</div>`;
 }
 function list(rows){return rows.length?rows.map(r=>`<div class="hotel-row"><div><b>${esc(r.guest)}</b><br>${day(r.start)} a ${day(r.end)} · ${cat(r.unit.categoryId)} · ${r.unit.room?'Quarto '+r.unit.room:'A atribuir'} · ${r.status}</div>${btn('Abrir conta e reserva','detail',r.id)}</div>`).join(''):empty('Nenhuma reserva neste grupo.');}
-function detail(r){
+function reservationActions(r){
  const t=totals(s,r),confirmed=r.status==='Confirmada';
  let actions=confirmed?['change','checkin','cancel']:[];
  if(r.status==='Hospedado')actions.push('checkout');
@@ -39,18 +39,47 @@ function detail(r){
    if(confirmed&&role.value==='Gestão')actions.push('reviseExternal','cancelExternal');
    if(!external.cancelled&&external.expected>external.actual&&role.value==='Gestão')actions.push('settle');
  }
- return panel(r.guest,`<p>${day(r.start)} a ${day(r.end)} · ${cat(r.unit.categoryId)} · ${r.unit.people} pessoa(s) · ${r.unit.room?'Quarto '+r.unit.room:'Quarto a atribuir'} · ${r.status}</p><p>${r.source} ${esc(r.externalId||'')}</p>${external?`<p>Cobrança ${esc(({ota:'pelo canal',property:'pela hospedagem',unknown:'a conferir'})[external.collector])} · Comissão ${external.commission==null?'Pendente':money(external.commission)} · Repasse previsto ${external.expected==null?'Pendente':money(external.expected)} · Repasse efetivo ${money(external.actual)}</p>`:''}<p>Diárias ${money(t.lodging)} · Consumos ${money(t.extras)} · Total ${money(t.total)} · ${external?'Recebido do hóspede':'Recebido líquido'} ${money(t.paid)}</p><h3>${t.balance<0?'Crédito a devolver':external?'Saldo do hóspede':'Saldo'} ${money(Math.abs(t.balance))}</h3><details><summary>Diárias, consumos e recebimentos</summary>${r.unit.rates.map(n=>`<p>${day(n.day)} · ${money(n.price)}</p>`).join('')}${r.items.map(x=>`<p>${esc(x.name)} · ${money(x.amount)}</p>`).join('')}${s.receipts.filter(x=>x.reservationId===r.id).map(x=>`<p>${day(x.day)} · ${x.kind} · ${x.method} · ${money(x.amount)}</p>`).join('')}</details><div class="hotel-actions">${actions.map(a=>btn(labelAction[a],a,r.id)).join('')}${btn('Voltar','back')}</div>`);
+ return actions;
 }
+function detail(r){
+ return bookingDetail(r,totals(s,r),s.connector?.bookings.find(b=>b.reservationId===r.id),reservationActions(r));
+}
+function bookingDetail(r,t,external,actions){
+ const rows=values=>`<dl class="stay-fields">${values.map(([label,value])=>`<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl>`;
+ const stay=[['Chegada',day(r.start)],['Saída',day(r.end)],['Quarto',r.unit.room||'A atribuir'],['Categoria',cat(r.unit.categoryId)],['Hóspedes',r.unit.people],['Origem',[r.source,r.externalId].filter(Boolean).join(' · ')]];
+ if(r.discountPercent)stay.push(['Tarifa fidelidade',`−${r.discountPercent}% nas diárias`]);
+ if(r.checkin)stay.push(['Ficha de check-in',`Concluída em ${day(r.checkin.day)}`]);
+ const values=[['Diárias',money(t.lodging)],['Consumos',money(t.extras)],['Total',money(t.total)],[external?'Recebido do hóspede':'Recebido líquido',money(t.paid)]];
+ const balance=t.balance<0?'Crédito a devolver':external?'Saldo do hóspede':'Saldo';
+ const channel=external?`<h4>Cobrança pelo canal ou pela hospedagem</h4>${rows([
+   ['Responsável',({ota:'Canal',property:'Hospedagem',unknown:'A conferir'})[external.collector]],
+   ['Comissão',external.commission==null?'Pendente':money(external.commission)],
+   ['Repasse previsto',external.expected==null?'Pendente':money(external.expected)],
+   ['Repasse efetivo',money(external.actual)]
+ ])}`:'';
+ const entries=[
+   ...r.unit.rates.map(n=>[day(n.day),money(n.price)]),
+   ...r.items.map(x=>[x.name,money(x.amount)]),
+   ...s.receipts.filter(x=>x.reservationId===r.id).map(x=>[[day(x.day),x.kind,x.method].join(' · '),money(x.amount)])
+ ];
+ return `<section class="hotel-panel stay-detail" aria-label="Detalhes da reserva">
+ <header class="stay-header"><div><p class="hotel-muted">Reserva</p><h2>${esc(r.guest)}</h2></div><span class="stay-status" data-status="${esc(r.status)}">${esc(r.status)}</span></header>
+ <section><h3>Estadia</h3>${rows(stay)}</section>
+ <section><h3>Conta da estadia</h3>${rows(values)}<div class="stay-balance"><span>${balance}</span><strong>${money(Math.abs(t.balance))}</strong></div>${channel}
+ <details class="stay-entries"><summary>Diárias, consumos e recebimentos</summary>${rows(entries)}</details></section>
+ <div class="hotel-actions stay-actions">${actions.map(a=>btn(labelAction[a],a,r.id,['receive','checkin'].includes(a))).join('')}${btn('Voltar','back')}</div></section>`;
+}
+
 function roomCards(rooms,date=s.businessDate,cleaning=false){
  if(!rooms.length)return empty('Todos os quartos estão limpos.');
  const today=date===s.businessDate;
- return `<section class="room-overview"><h3>Quartos em ${day(date)}</h3><p class="hotel-muted">As camas ilustram a capacidade. A tabela por categoria inclui as reservas sem quarto atribuído.</p><div class="room-grid">${rooms.map(q=>{
+ return `<section class="room-overview"><h3>Quartos em ${day(date)}</h3><p class="hotel-muted">A tabela por categoria inclui as reservas sem quarto atribuído.</p><div class="room-grid">${rooms.map(q=>{
   const occupied=today&&s.reservations.some(r=>r.status==='Hospedado'&&r.unit.room===q.id);
   const reserved=s.reservations.some(r=>active(r)&&r.unit.room===q.id&&r.start<=date&&date<r.end);
   const blocked=s.blocks.some(b=>b.room===q.id&&b.start<=date&&date<b.end);
   const [tone,status]=occupied?['occupied','Ocupado']:blocked?['blocked','Manutenção']:reserved?['reserved','Reservado']:['free','Sem reserva atribuída'];
   const capacity=s.categories.find(c=>c.id===q.categoryId).capacity;
-  return `<article class="room-card ${tone}"><header><span class="room-house" aria-hidden="true"></span><div><h4>Quarto ${q.id}</h4><p>${cat(q.categoryId)}</p></div></header><span class="room-chip">${status}</span><div class="room-capacity"><span class="room-beds" aria-hidden="true">${'<i></i>'.repeat(capacity)}</span>Até ${capacity} pessoas</div>${today?`<p class="room-clean">Limpeza · ${q.cleaning}</p>`:''}${cleaning&&!occupied&&role.value!=='Recepção'?btn('Atualizar limpeza','clean',q.id):''}</article>`;
+  return `<article class="room-card ${tone}"><header><span class="room-house" aria-hidden="true"></span><div><h4>Quarto ${q.id}</h4><p>${cat(q.categoryId)}</p></div></header><span class="room-chip">${status}</span><div class="room-capacity"><span class="room-people" aria-hidden="true">${'<i></i>'.repeat(capacity)}</span>Até ${capacity} pessoas</div>${today?`<p class="room-clean">Limpeza · ${q.cleaning}</p>`:''}${cleaning&&!occupied&&role.value!=='Recepção'?btn('Atualizar limpeza','clean',q.id):''}</article>`;
  }).join('')}</div></section>`;
 }
 function prep(rooms){return roomCards(rooms,s.businessDate,true);}
@@ -59,15 +88,48 @@ function map(){
  const bookings=s.reservations.filter(r=>active(r)&&r.start<=days.at(-1)&&r.end>period);
  return `<label>Período de sete noites a partir de <input type="date" id="period" value="${period}"></label>`+panel('Disponibilidade por categoria e noite',`<div class="hotel-table"><table><thead><tr><th>Categoria</th>${days.map(d=>`<th>${day(d).slice(0,5)}</th>`).join('')}</tr></thead><tbody>${s.categories.map(c=>`<tr><th>${c.name}</th>${days.map(d=>`<td>${inventory(s,c.id,d)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`)+roomCards(s.rooms,period)+`<div class="desktop-map">${panel('Mapa de acomodações',`<div class="hotel-table"><table><thead><tr><th>Quarto</th>${days.map(d=>`<th>${day(d).slice(0,5)}</th>`).join('')}</tr></thead><tbody>${s.rooms.map(q=>`<tr><th>${q.id}</th>${days.map(d=>{const r=bookings.find(x=>x.unit.room===q.id&&x.start<=d&&d<x.end),block=s.blocks.some(x=>x.room===q.id&&x.start<=d&&d<x.end);return `<td class="${r||block?'busy':''}">${r?esc(r.guest):block?'Manutenção':'Livre'}</td>`}).join('')}</tr>`).join('')}</tbody></table></div>`)}</div><div class="mobile-agenda">${panel('Chegadas e saídas no período',list(s.reservations.filter(r=>r.status!=='Cancelada'&&(days.includes(r.start)||days.includes(r.end))).sort((a,b)=>a.start.localeCompare(b.start))))}</div>`+panel('Reservas a atribuir',list(bookings.filter(r=>!r.unit.room)));
 }
+function guestsPanel(){
+ return panel('Cadastro de hóspedes',`<p>Use somente dados fictícios. Hóspedes participantes podem escolher a tarifa fidelidade de 10% em reservas diretas.</p>${btn('Novo hóspede','guest', '',true)}${(s.guests||[]).map(g=>`<div class="hotel-row"><div><strong>${esc(g.name)}</strong><br>${g.loyalty?'Participante da fidelidade':'Cadastro padrão'} · ${(s.reservations.filter(r=>r.guestId===g.id)).length} reserva(s)</div>${btn('Editar cadastro','guest',g.id)}</div>`).join('')}`)+panel('Mensagens de aniversário · simulação',`<p>A data de operação gera uma mensagem por hóspede e ano para quem autorizou o contato. O histórico fica nesta demonstração.</p>${(s.birthdayMessages||[]).slice().reverse().map(m=>`<p>${day(m.day)} · ${esc(m.text)} · ${m.status}</p>`).join('')||empty('Nenhuma mensagem simulada para aniversários.')}`);
+}
+function guestFields(g,name){
+ return `${field('Nome completo',name,'text',g?.name||'')}<label>Contato fictício <input name="contact" maxlength="120" value="${esc(g?.contact||'')}"></label><label>Data de nascimento <input type="date" name="birth" max="${s.businessDate}" value="${esc(g?.birth||'')}"></label><label><span><input type="checkbox" name="loyalty" ${g?.loyalty?'checked':''}> Participa da fidelidade</span></label><label><span><input type="checkbox" name="birthdayConsent" ${g?.birthdayConsent?'checked':''}> Autoriza mensagens de aniversário</span></label>`;
+}
+function calendar(){
+ const first=calendarDay.slice(0,7)+'-01';
+ const weekday=new Date(first+'T12:00:00Z').getUTCDay();
+ const start=nextDate(first,-weekday);
+ const month=new Intl.DateTimeFormat('pt-BR',{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(first+'T12:00:00Z'));
+ const sameMonth=date=>date.slice(0,7)===first.slice(0,7);
+ const activeReservations=s.reservations.filter(active);
+ const daily=date=>activeReservations.filter(r=>r.start<=date&&date<=r.end);
+ const cells=Array.from({length:42},(_,i)=>nextDate(start,i));
+ while(!sameMonth(cells.at(-7)))cells.splice(-7);
+ const cards=daily(calendarDay).map(r=>{
+  const event=r.end===calendarDay?'Saída':r.start===calendarDay?'Chegada':'Estadia';
+  const actions=reservationActions(r).filter(a=>a!=='checkin'||calendarDay===s.businessDate&&r.start<=calendarDay&&calendarDay<r.end);
+  return `<article class="hotel-row agenda-row"><div><strong>${esc(r.guest)}</strong><p>${event} · ${esc(r.status)} · ${r.unit.room?'Quarto '+esc(r.unit.room):'Quarto a atribuir'}</p></div><div class="hotel-actions">${btn('Abrir conta e reserva','detail',r.id)}${actions.map(a=>btn(labelAction[a],a,r.id)).join('')}</div></article>`;
+ }).join('');
+ return `<div class="agenda-layout"><section class="hotel-panel calendar-panel" aria-label="Calendário mensal"><div class="calendar-toolbar">${btn('Mês anterior','calendar-prev')}<h3>${month}</h3>${btn('Próximo mês','calendar-next')}</div>
+ <div class="calendar-grid">${['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(d=>`<span class="calendar-weekday">${d}</span>`).join('')}${cells.map(date=>{
+  const count=daily(date).length;
+  return `<button type="button" class="calendar-day ${sameMonth(date)?'':'other-month'}" data-action="calendar-day" data-id="${date}" aria-pressed="${date===calendarDay}" ${date===s.businessDate?'aria-current="date"':''} aria-label="${day(date)}, ${count} ${count===1?'reserva':'reservas'}"><strong>${Number(date.slice(-2))}</strong>${count?`<small>${count}</small>`:''}</button>`;
+ }).join('')}</div><div class="hotel-actions calendar-tools">${btn('Dia de operação','calendar-today')}<label>Ir para a data <input type="date" id="calendar-date" value="${calendarDay}"></label></div></section>
+ <section class="hotel-panel calendar-agenda"><div class="calendar-toolbar"><h3>Agenda de ${day(calendarDay)}</h3>${calendarDay>=s.businessDate?btn('Reservar nesta data','calendar-reserve','',true):''}</div>
+ <p class="hotel-muted">Chegadas, estadias e saídas previstas. O número no calendário mostra as reservas ativas do dia.</p>
+ ${calendarDay>=s.businessDate?`<div class="calendar-availability" aria-label="Disponibilidade por categoria">${s.categories.map(c=>`<span>${esc(c.name)} <strong>${inventory(s,c.id,calendarDay)}</strong></span>`).join('')}</div>`:''}
+ ${cards||empty('Nenhuma reserva nesta data.')}</section></div>`;
+}
 function render(){
- const cleaning=role.value==='Limpeza',manager=role.value==='Gestão',tabs=cleaning?['Hoje','Quartos']:['Hoje','Reservas','Mapa','Quartos',...(manager?['Tarifas','Canais','Histórico']:[])];
+ const cleaning=role.value==='Limpeza',manager=role.value==='Gestão',tabs=cleaning?['Hoje','Quartos']:['Calendário','Hoje','Reservas','Mapa','Quartos',...(!connected?['Hóspedes']:[]),...(manager?['Tarifas','Canais','Histórico']:[])];
  if(!tabs.includes(tab))tab='Hoje';
  const dirty=s.rooms.filter(q=>q.cleaning!=='Limpo'),arrivals=s.reservations.filter(r=>r.status==='Confirmada'&&r.start===s.businessDate),departures=s.reservations.filter(r=>r.status==='Hospedado'&&r.end<=s.businessDate);
  let content='';
- if(tab==='Hoje'){
+ if(tab==='Calendário')content=selected()?detail(selected()):calendar();
+ else if(tab==='Hoje'){
  const groups=cleaning?[]:[['Chegadas',arrivals],['Saídas previstas ou vencidas',departures],['Contas com saldo ou crédito',s.reservations.filter(r=>totals(s,r).balance!==0)]];
  content=`<div class="hotel-grid">${[...groups,['Quartos a preparar',dirty]].map(([name,rows])=>`<div class="hotel-card"><h3>${name}</h3><strong>${rows.length}</strong></div>`).join('')}</div>`+groups.map(([name,rows])=>panel(name,list(rows))).join('')+panel('Preparação',prep(dirty));
  }else if(tab==='Reservas')content=selected()?detail(selected()):reservationSearch();
+ else if(tab==='Hóspedes')content=guestsPanel();
  else if(tab==='Mapa')content=map();
  else if(tab==='Quartos')content=prep(s.rooms)+panel('Manutenção', (manager?btn('Bloquear quarto','block'):'')+s.blocks.map(b=>`<p>Quarto ${b.room} · ${day(b.start)} a ${day(b.end)} · ${esc(b.note)} ${manager?btn('Liberar','unblock',b.id):''}</p>`).join(''));
  else if(tab==='Tarifas')content=s.plans.map(p=>panel(cat(p.categoryId),`<p>${p.name} · Até ${s.categories.find(c=>c.id===p.categoryId).capacity} pessoas · ${money(p.price)} por noite</p>${btn('Alterar diária','rate',p.id)}`)).join('');
@@ -85,12 +147,18 @@ function hotelGuide(){
  editor.innerHTML=`<h2>Uma estadia na Pousada Nuvens</h2><ol class="guide"><li><strong>Reserve duas noites Standard.</strong> Use a data de operação e deixe o quarto a atribuir. Com a tarifa atual de ${money(rate)}, as diárias somam ${money(rate*2)}.</li><li><strong>Consulte o mapa.</strong> A reserva ocupa uma vaga em cada noite. Atribua um quarto Standard disponível e limpo e faça check-in.</li><li><strong>Confira a conta.</strong> No cenário inicial, registre R$ 150 como sinal e R$ 40 de frigobar. O total é R$ 540 e o saldo é R$ 390. Se a tarifa foi editada, confira os valores na conta.</li><li><strong>Quite o saldo e faça check-out.</strong> Em Hoje, o quarto aparece a preparar. Use o perfil Limpeza para marcá-lo como limpo.</li></ol><div class="hotel-actions">${btn('Abrir nova reserva','start-guide','',true)}${btn('Fechar','dismiss')}</div>`;
  sheet.showModal();
 }
-function show(action,id){
+function show(action,id,reserveDate=s.businessDate){
  pending=action;target=id;
  const r=s.reservations.find(x=>x.id===id);
  let body='';
+ if(action==='guest')body=guestFields((s.guests||[]).find(g=>g.id===id),'name');
+ if(action==='checkin'&&!connected){
+  const g=(s.guests||[]).find(x=>x.id===r.guestId);
+  body=`<p>Quarto ${esc(r.unit.room||'a atribuir')} · ${r.unit.people} pessoa(s)</p>`+select('Cadastro existente','guestId',[['','Criar cadastro'],...(s.guests||[]).map(g=>[g.id,g.name])],r.guestId)+guestFields(g||{name:r.guest},'name');
+ }
  if(['reserve','simulate','change'].includes(action)){
- body=(action==='change'||(connected&&action==='simulate')?'':field('Hóspede','guest'))+(action==='simulate'?field('Código externo fictício','externalId'):'')+field('Chegada','start','date',r?.start||s.businessDate)+field('Saída','end','date',r?.end||nextDate(s.businessDate,2))+select('Categoria e plano','planId',s.plans.map(p=>[p.id,cat(p.categoryId)+' · '+p.name+' · '+money(p.price)]),r?.unit.planId)+field('Pessoas','people','number',r?.unit.people||2)+(connected&&action==='simulate'?'':select('Acomodação','room',[['','Atribuir depois'],...s.rooms.map(q=>[q.id,'Quarto '+q.id+' · '+cat(q.categoryId)])],r?.unit.room));
+ body=(action==='change'||(connected&&action==='simulate')?'':field('Hóspede','guest'))+(action==='simulate'?field('Código externo fictício','externalId'):'')+field('Chegada','start','date',r?.start||reserveDate)+field('Saída','end','date',r?.end||nextDate(reserveDate,2))+select('Categoria e plano','planId',s.plans.map(p=>[p.id,cat(p.categoryId)+' · '+p.name+' · '+money(p.price)]),r?.unit.planId)+field('Pessoas','people','number',r?.unit.people||2)+(connected&&action==='simulate'?'':select('Acomodação','room',[['','Atribuir depois'],...s.rooms.map(q=>[q.id,'Quarto '+q.id+' · '+cat(q.categoryId)])],r?.unit.room));
+ if(action==='reserve'&&!connected)body+=select('Hóspede cadastrado','guestId',[['','Nome avulso'],...(s.guests||[]).map(g=>[g.id,g.name])])+ '<label><span><input type="checkbox" name="promo"> Aplicar tarifa fidelidade · 10% nas diárias</span></label>';
  }else if(action==='receive')body=select('Lançamento','kind',choices(['Sinal','Pagamento']))+select('Forma','method',choices(['Pix','Dinheiro','Cartão']));
  if(['consume','receive','refund','rate'].includes(action))body+=field('Valor (R$)','amount','number',action==='receive'?Math.max(0,totals(s,r).balance)/100:'');
  if(['consume','refund','cancel','block'].includes(action))body+=field(action==='consume'?'Descrição':'Motivo','note');
@@ -106,6 +174,22 @@ function show(action,id){
  const filter=()=>{const category=s.plans.find(p=>p.id===editor.elements.planId.value).categoryId;for(const option of editor.elements.room.options)option.disabled=!!option.value&&!s.rooms.some(q=>q.id===option.value&&q.categoryId===category);if(editor.elements.room.selectedOptions[0]?.disabled)editor.elements.room.value='';};
  editor.elements.planId.onchange=filter;filter();
  }
+ if(editor.elements.guestId){
+  editor.elements.guestId.onchange=()=>{
+   const g=(s.guests||[]).find(x=>x.id===editor.elements.guestId.value);
+   if(action==='reserve'){
+    editor.elements.guest.readOnly=Boolean(g);
+    if(g)editor.elements.guest.value=g.name;
+   }
+   if(action==='checkin'){
+    editor.elements.name.value=g?.name||r.guest;
+    editor.elements.contact.value=g?.contact||'';
+    editor.elements.birth.value=g?.birth||'';
+    editor.elements.loyalty.checked=Boolean(g?.loyalty);
+    editor.elements.birthdayConsent.checked=Boolean(g?.birthdayConsent);
+   }
+  };
+ }
  sheet.showModal();
 }
 document.addEventListener('click',e=>{
@@ -115,7 +199,14 @@ document.addEventListener('click',e=>{
  if(action==='guide'){hotelGuide();return;}
  if(action==='start-guide'){sheet.close();show('reserve','');return;}
  if(action==='dismiss'){sheet.close();return;}
- if(action==='detail'||action==='back'){tab='Reservas';opened=b.dataset.id;render();return;}
+ if(action==='calendar-day'||action==='calendar-today'){calendarDay=action==='calendar-day'?b.dataset.id:s.businessDate;render();return;}
+ if(action==='calendar-prev'||action==='calendar-next'){
+  const [year,month]=calendarDay.split('-').map(Number);
+  calendarDay=new Date(Date.UTC(year,month-1+(action==='calendar-next'?1:-1),1)).toISOString().slice(0,10);render();return;
+ }
+ if(action==='calendar-reserve'){show('reserve','',calendarDay);return;}
+ if(action==='detail'){tab=tab==='Calendário'?'Calendário':'Reservas';opened=b.dataset.id;render();return;}
+ if(action==='back'){opened='';render();return;}
  show(action,b.dataset.id);
 });
 editor.onsubmit=async e=>{
@@ -127,16 +218,17 @@ editor.onsubmit=async e=>{
  if(data.people)data.people=Number(data.people);
  if(data.planId)data.categoryId=s.plans.find(p=>p.id===data.planId).categoryId;
  if(pending==='clean')data.room=target;
+ if(pending==='guest')data.guestId=target;
  if(pending==='rate')data.planId=target;
  s=pending==='reset'?await store.reset():await store.transact({...data,id,actor:role.value,type:pending,reservationId:target,blockId:target});
- if(pending==='simulate'&&connected){tab='Canais';opened='';}else if(['reserve','simulate'].includes(pending)){tab='Reservas';opened=id;}
- if(['date','reset'].includes(pending))period=s.businessDate;
+ if(pending==='simulate'&&connected){tab='Canais';opened='';}else if(pending==='reserve'&&tab==='Calendário'){calendarDay=data.start;opened='';}else if(['reserve','simulate'].includes(pending)){tab='Reservas';opened=id;}
+ if(['date','reset'].includes(pending)){period=s.businessDate;calendarDay=s.businessDate;}
  sheet.close();render();const notice=document.querySelector('#notice');notice.textContent='Operação concluída.';clearTimeout(timer);timer=setTimeout(()=>notice.textContent='',2400);
  }catch(error){editor.querySelector('[role=alert]').textContent=error.message;}finally{submit.disabled=false;}
 };
-role.onchange=()=>{opened='';tab='Hoje';render();};
+role.onchange=()=>{opened='';tab=role.value==='Limpeza'?'Hoje':'Calendário';render();};
 main.oninput=e=>{if(e.target.id==='guest-search'){guestQuery=e.target.value;document.querySelector('#res-results').innerHTML=filteredReservations();}};
-main.onchange=e=>{if(e.target.name==='reservationStatus'){statusFilter=e.target.value;document.querySelector('#res-results').innerHTML=filteredReservations();}if(e.target.id==='period'&&/^\d{4}-\d\d-\d\d$/.test(e.target.value)){period=e.target.value;render();}};
+main.onchange=e=>{if(e.target.id==='calendar-date'&&e.target.value){calendarDay=e.target.value;render();return;}if(e.target.name==='reservationStatus'){statusFilter=e.target.value;document.querySelector('#res-results').innerHTML=filteredReservations();}if(e.target.id==='period'&&/^\d{4}-\d\d-\d\d$/.test(e.target.value)){period=e.target.value;render();}};
 if(connected)setInterval(async()=>{if(sheet.open||document.activeElement?.closest('.hotel-filters'))return;try{const latest=await store.read();if(!sheet.open){s=latest;render();}}catch{document.querySelector('#notice').textContent='Worker indisponível. Confira o processo local.';}},5000);
 window.addEventListener('storage',e=>{if(!connected&&e.key===HOTEL_STORAGE_KEY){s=store.read();render();}});
 render();

@@ -64,16 +64,39 @@ export function totals(s,r) {
 }
 function amount(value) { requireValue(Number.isSafeInteger(value)&&value>0&&value<=100000000,'Valor fora do limite.'); return value; }
 function label(value) { requireValue(typeof value==='string'&&value.trim(),'Preencha os campos obrigatórios.');return value.trim(); }
+function saveGuest(s, data, id){
+ const name=label(data.name);
+ const birth=data.birth||'';
+ if(birth)requireValue(dateNumber(birth)<=dateNumber(s.businessDate),'Nascimento posterior à data de operação.');
+ const record={id,name,birth,contact:String(data.contact||'').trim().slice(0,120),loyalty:data.loyalty==='on',birthdayConsent:data.birthdayConsent==='on'};
+ requireValue(name.length<=100,'Nome longo demais.');
+ s.guests=(s.guests||[]).filter(g=>g.id!==id).concat(record);
+ return record;
+}
+function scheduleBirthdays(s){
+ const day=s.businessDate, year=day.slice(0,4);
+ s.birthdayMessages??=[];
+ for(const g of s.guests||[]){
+  if(!g.birthdayConsent||!g.contact||!g.birth||g.birth.slice(5)!==day.slice(5))continue;
+  if(s.birthdayMessages.some(m=>m.guestId===g.id&&m.year===year))continue;
+  s.birthdayMessages.push({guestId:g.id,year,day,text:`Feliz aniversário, ${g.name}! A Pousada Nuvens deseja um ótimo dia.`,status:'Simulada'});
+ }
+}
 export function dispatchHotel(old,c) {
   const id=label(c.id);
   if(old.processed.includes(id)) return old;
   const s=structuredClone(old), manager=c.actor==='Gestão';
-  requireValue(manager || (c.actor==='Limpeza'?c.type==='clean':c.actor==='Recepção'&&['reserve','change','checkin','checkout','consume','receive','cancel'].includes(c.type)), 'Ação indisponível para este perfil.');
+  requireValue(manager || (c.actor==='Limpeza'?c.type==='clean':c.actor==='Recepção'&&['guest','reserve','change','checkin','checkout','consume','receive','cancel'].includes(c.type)), 'Ação indisponível para este perfil.');
   const r=s.reservations.find(x=>x.id===c.reservationId);
   const q=s.rooms.find(x=>x.id===c.room);
   if(['change','checkin','checkout','receive','consume','cancel','refund'].includes(c.type)) requireValue(r,'Reserva não encontrada.');
   let audit=c.note?.trim()||'';
   switch(c.type){
+    case 'guest': {
+      const existing=(s.guests||[]).find(g=>g.id===c.guestId);
+      requireValue(!c.guestId||existing,'Cadastro não encontrado.');
+      saveGuest(s,c,existing?.id||id);break;
+    }
     case 'simulate':
     case 'reserve':
     case 'change': {
@@ -91,10 +114,18 @@ export function dispatchHotel(old,c) {
       }
       const booking=modifying?r:{...scope,id:id,guest:label(c.guest),status:'Confirmada',items:[],
         source:c.type==='simulate'?'Canal simulado':'Direta',externalId:c.type==='simulate'?c.externalId:null};
+      if(!modifying&&c.type==='reserve'){
+        const guest=(s.guests||[]).find(g=>g.id===c.guestId);
+        requireValue(!c.guestId||guest,'Cadastro não encontrado.');
+        requireValue(c.promo!=='on'||guest?.loyalty,'Selecione um hóspede participante da fidelidade.');
+        if(guest){booking.guestId=guest.id;booking.guest=guest.name;}
+        if(c.promo==='on')booking.discountPercent=10;
+      }
+      const nightlyPrice=Math.round(plan.price*(100-(booking.discountPercent||0))/100);
       const previous=booking.unit;
       booking.start=start;booking.end=end;
       booking.unit={id:previous?.id||id+'-1',categoryId:cat.id,planId:plan.id,room:c.room||null,people:c.people,
-        rates:nights.map(day=>({day,price:(previous?.planId===plan.id && previous.rates.find(x=>x.day===day)?.price)||plan.price}))};
+        rates:nights.map(day=>({day,price:(previous?.planId===plan.id && previous.rates.find(x=>x.day===day)?.price)||nightlyPrice}))};
       if(!modifying)s.reservations.push(booking);
       requireValue(feasible(s,cat.id),'Sem disponibilidade durante toda a estadia.');
       audit=[booking.guest,start,end,cat.name,c.room||'Sem atribuição'].join(' · ');
@@ -112,6 +143,13 @@ export function dispatchHotel(old,c) {
       const room=s.rooms.find(x=>x.id===r.unit.room);
       requireValue(r.status==='Confirmada'&&r.start<=s.businessDate&&s.businessDate<r.end,'Confira o período e a situação da reserva.');
       requireValue(room?.cleaning==='Limpo'&&!s.reservations.some(x=>x.status==='Hospedado'&&x.unit.room===room.id),'Atribua um quarto limpo e desocupado.');
+      if(c.name!==undefined){
+        const guestId=c.guestId||r.guestId;
+        requireValue(!guestId||(s.guests||[]).some(g=>g.id===guestId),'Cadastro não encontrado.');
+        const guest=saveGuest(s,c,guestId||id);
+        r.guestId=guest.id;r.guest=guest.name;
+        r.checkin={day:s.businessDate,guestId:guest.id,people:r.unit.people};
+      }
       r.status='Hospedado';break;
     }
     case 'checkout':
@@ -144,5 +182,6 @@ export function dispatchHotel(old,c) {
   if(['reserve','simulate','change','cancel','checkout','block','unblock','rate'].includes(c.type))
     s.outbox.push({...scope,id,type:c.type,reservationId:r?.id||(['simulate','reserve'].includes(c.type)?id:null),status:'Pendente'});
   s.history.push({id,day:s.businessDate,actor:c.actor,type:c.type,target:r?.id||c.room||'',note:audit});
+  if(['guest','checkin','date'].includes(c.type))scheduleBirthdays(s);
   s.processed.push(id);return s;
 }

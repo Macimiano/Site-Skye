@@ -150,10 +150,20 @@ export function dispatchWine(state,c) {
   if(Object.hasOwn(state.processedCommands,c.id)) {if(state.processedCommands[c.id]!==signature)fail('Chave de idempotência já utilizada por outra operação.','IDEMPOTENCY_CONFLICT');return state;}
   const s=structuredClone(state);
   switch(c.type) {
+    case 'SAVE_CLIENT': {
+      const name=String(c.name||'').trim(), recordId=String(c.clientId||'').trim();
+      if(!["gestao","caixa"].includes(c.actor)||!name||!recordId||name.length>100)throw new Error('Informe o nome do cliente com um perfil autorizado.');
+      const record={id:recordId,name,contact:String(c.contact||'').trim().slice(0,120)};
+      s.clients=(s.clients||[]).filter(x=>x.id!==record.id).concat(record);
+      break;
+    }
     case 'CREATE_ORDER': {
+      const client=(s.clients||[]).find(x=>x.id===c.clientId);
+      if(c.clientId&&!client)throw new Error('Cliente não encontrado.');
+
       sales(c);open(s);if(!['balcao','entrega'].includes(c.mode))fail('Modo de atendimento inválido.');const id=required(c.orderId,'o identificador do pedido');if(s.orders.some(o=>o.id===id))fail('Pedido já existente.');
-      if(c.mode==='entrega'){required(c.customer,'o cliente fictício');required(c.address,'o endereço de entrega');}integer(c.deliveryFeeCents||0,'Taxa de entrega');
-      s.orders.push({id,number:s.orders.length+1,mode:c.mode,customer:text(c.customer,100),address:c.mode==='entrega'?text(c.address,240):'',deliveryFeeCents:c.mode==='entrega'?c.deliveryFeeCents||0:0,stage:'draft',items:[],returnables:[],discountCents:0,stockReserved:false,stockConsumed:false,createdAt:now(),shiftId:s.shift.id});audit(s,c,{mode:c.mode});break;
+      if(c.mode==='entrega'){required(client?.name||c.customer,'o cliente fictício');required(c.address,'o endereço de entrega');}integer(c.deliveryFeeCents||0,'Taxa de entrega');
+      s.orders.push({id,number:s.orders.length+1,mode:c.mode,clientId:client?.id||null,customer:text(client?.name||c.customer,100),address:c.mode==='entrega'?text(c.address,240):'',deliveryFeeCents:c.mode==='entrega'?c.deliveryFeeCents||0:0,stage:'draft',items:[],returnables:[],discountCents:0,stockReserved:false,stockConsumed:false,createdAt:now(),shiftId:s.shift.id});audit(s,c,{mode:c.mode});break;
     }
     case 'ADD_ITEM': {
       sales(c);open(s);const o=orderFor(s,c.orderId);if(o.stage!=='draft')fail('Somente rascunhos podem receber itens.');

@@ -1,3 +1,19 @@
+# Skye v6.4 — retrato original e quatro prévias corrigidas
+
+- Foto da Fran: arquivo **original de câmera** `assets/equipe/fran-selfie-original-v64.jpg`, sem alterações de rosto, fundo ou filtros. O HTML foi atualizado para essa imagem exclusiva; a versão editada foi removida do pacote.
+- Os cartões Restaurante, Adega, Pet shop e Hotel têm imagens específicas em `assets/previews/*-v64.webp` (nomes inéditos para evitar reutilização do cache de versões anteriores).
+- As demonstrações correspondentes continuam em `demonstracao-restaurante/`, `demonstracao-adega/`, `demonstracao-petshop/` e `demonstracao-hotel/`.
+- O restante do site foi preservado conforme a base v6.3 disponibilizada na conversa.
+
+## Atualizar o projeto sem perder o endereço
+
+Este ZIP contém a **pasta raiz do site**: `index.html`, `styles.css`, `vercel.json` e todas as pastas `assets/` e `demonstracao-*/` diretamente na raiz.
+
+1. Extraia o ZIP.
+2. No projeto existente conectado à Vercel, substitua/adicone **todos** os arquivos, inclusive as pastas `assets/previews/` e `demonstracao-*/`.
+3. Faça o deploy no projeto atual, sem criar outro projeto.
+4. Abra uma janela anônima, acesse `https://www.skyegestao.com.br/#sobre` e role até os cartões das demonstrações. Se as imagens não atualizarem, cheque o deployment servido e limpe o cache do navegador.
+
 # Skye Gestão e Inovação — v6.0 / Seção Sobre nós
 
 Esta versão acrescenta uma seção institucional de apresentação humana à página inicial, após a seção de visitas presenciais. Inclui navegação no menu e rodapé e respeita o tema claro/escuro existente.
@@ -145,3 +161,19 @@ Seção **Sobre nós** atualizada com as informações fornecidas pelos respons�
 - As fotos são carregadas apenas ao aproximar a seção (lazy loading) e recebem descrições acessíveis.
 - Mantidas a história, o tema automático, as demonstrações, o vídeo, o Analytics e o WhatsApp.
 - A publicação exige atualizar o projeto Vercel existente, mantendo `vercel.json` na raiz.
+
+
+## Vitrine ampliada — v6.3
+
+Adicionadas quatro experiências ilustrativas e limitadas, com dados **inteiramente fictícios**:
+- `demonstracao-restaurante/`: comandas, cozinha e caixa;
+- `demonstracao-adega/`: bebidas, estoque e reposição;
+- `demonstracao-petshop/`: agenda de serviços e clientes;
+- `demonstracao-hotel/`: reservas e quartos.
+
+Os quatro novos previews estão em `assets/previews/`. São representações visuais da interface
+de demonstração criada para cada setor, **não capturas de sistemas de clientes reais**.
+Nenhuma demo possui backend ou envio de informações reais. Os registros demonstrativos são
+limitados a três por sessão e descartados no recarregamento.
+
+A foto de Fran usa o fundo original do arquivo enviado pelo usuário.

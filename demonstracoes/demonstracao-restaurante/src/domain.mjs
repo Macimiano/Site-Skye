@@ -164,16 +164,26 @@ export function dispatch(state, command) {
   }
   const s = structuredClone(state);
   switch (c.type) {
+    case 'SAVE_CLIENT': {
+      const name=String(c.name||'').trim(), recordId=String(c.clientId||'').trim();
+      if(!["gestao","caixa"].includes(c.actor)||!name||!recordId||name.length>100)throw new Error('Informe o nome do cliente com um perfil autorizado.');
+      const record={id:recordId,name,contact:String(c.contact||'').trim().slice(0,120)};
+      s.clients=(s.clients||[]).filter(x=>x.id!==record.id).concat(record);
+      break;
+    }
     case 'CREATE_ORDER': {
+      const client=(s.clients||[]).find(x=>x.id===c.clientId);
+      if(c.clientId&&!client)throw new Error('Cliente não encontrado.');
+
       sales(c); open(s);
       if (!s.settings.modes.includes(c.mode)) fail('Modo de atendimento desabilitado.');
       const id = required(c.orderId, 'o identificador do pedido');
       if (s.orders.some(o => o.id === id)) fail('Pedido já existente.');
       if (c.mode === 'salao' && !text(c.table)) fail('Informe a mesa ou comanda.');
       if (c.mode === 'salao' && s.orders.some(o => o.mode === 'salao' && o.table === text(c.table) && o.stage !== 'cancelled' && (o.stage !== 'delivered' || orderTotals(s, o).balanceCents > 0))) fail('A mesa já possui uma conta ativa.');
-      if (c.mode === 'entrega') { required(c.customer, 'o cliente fictício'); required(c.address, 'o endereço da entrega'); }
+      if (c.mode === 'entrega') { required(client?.name||c.customer, 'o cliente fictício'); required(c.address, 'o endereço da entrega'); }
       integer(c.deliveryFeeCents || 0, 'Taxa de entrega');
-      s.orders.push({ id, number: s.orders.length + 1, mode: c.mode, table: text(c.table, 40), customer: text(c.customer, 120), address: text(c.address, 250), deliveryFeeCents: c.mode === 'entrega' ? c.deliveryFeeCents || 0 : 0, stage: 'draft', items: [], discountCents: 0, shiftId: s.shift.id, createdAt: now(), stockConsumed: false, stockReserved: false });
+      s.orders.push({ id, number: s.orders.length + 1, mode: c.mode, table: text(c.table, 40), clientId:client?.id||null,customer: text(client?.name||c.customer, 120), address: text(c.address, 250), deliveryFeeCents: c.mode === 'entrega' ? c.deliveryFeeCents || 0 : 0, stage: 'draft', items: [], discountCents: 0, shiftId: s.shift.id, createdAt: now(), stockConsumed: false, stockReserved: false });
       addHistory(s, c, { mode: c.mode }); break;
     }
     case 'ADD_ITEM': {

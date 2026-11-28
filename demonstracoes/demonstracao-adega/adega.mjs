@@ -96,7 +96,7 @@ function render() {
       <div class="sidebar-bottom"><button data-action="guide">${icon('help')} Roteiro da demonstração</button><a href="/#demonstracoes" target="_top">${icon('home')} Central de demonstrações</a><div class="local-state"><span></span> Adega salva neste navegador</div></div>
     </aside>
     <div class="workspace">
-      <div class="demo-bar"><span><strong>Demonstração SKYE</strong> • Pagamentos simulados</span><div class="wine-notice-actions"><a href="/#demonstracoes" target="_top">Central</a><button data-action="guide">Roteiro</button><button data-action="reset">Reiniciar adega</button></div></div>
+      <div class="demo-bar"><span><strong>Demonstração SKYE</strong> • Pagamentos simulados</span><div class="wine-notice-actions"><a href="/#demonstracoes" target="_top">Central</a><button data-action="guide">Roteiro</button><button data-action="clients">Clientes</button><button data-action="reset">Reiniciar adega</button></div></div>
       <header class="app-header"><div><p class="eyebrow">BRISA • ADEGA DEMONSTRATIVA</p><h1>${title}</h1><p class="wine-date">Data de referência: ${date(state.businessDate)}</p></div><div class="header-controls"><label class="role-select"><span>Explorar como</span><select id="role" aria-label="Perfil demonstrativo">${Object.entries(roleLabels).map(([value,label])=>`<option value="${value}" ${role===value?'selected':''}>${label}</option>`).join('')}</select></label>${role!=='entrega'&&view!=='order'?`<button class="primary" data-action="new">${icon('plus')} Nova venda <kbd>F2</kbd></button>`:''}</div></header>
       <main id="main" class="content">${(pages[view]||homePage)()}</main>
       <footer class="app-footer">${icon('check')} Dados fictícios • Isolado do restaurante <span>Perfil simulado · Sem autenticação nesta versão</span></footer>
@@ -205,8 +205,13 @@ function historyPage() {
   return `<section class="panel"><h2>Histórico da demonstração</h2>${state.history.slice().reverse().map(event=>{const order=orderById(event.orderId);const details=[order?`Pedido #${order.number} · ${orderName(order)}`:'',event.reason||'',event.quantity!==undefined?`Quantidade: ${qty(event.quantity)}`:'',event.amountCents!==undefined?`Valor: ${money(event.amountCents)}`:'',event.stage?`Situação: ${stageLabels[event.stage]}`:'',event.saleAdjustmentCents!==undefined?`Ajuste de venda: ${money(event.saleAdjustmentCents)}`:''].filter(Boolean);return `<article class="wine-history-event"><div><strong>${esc(historyLabels[event.type]||'Alteração registrada')}</strong><small>${dateTime(event.at)} · ${esc(roleLabels[event.actor]||event.actor)}</small></div><p>${esc(details.join('\n')||'Registro preservado na demonstração.')}</p></article>`;}).join('')||'<p class="subtle">Os registros aparecerão conforme você explora a adega.</p>'}</section>`;
 }
 
+function clientForm(id){
+ const clients=state.clients||[];
+ const client=clients.find(c=>c.id===id);
+ modal(client?'Editar cliente':'Clientes',`<p class="subtle">Use nomes e contatos fictícios. Ao abrir um pedido, selecione um cadastro ou digite um nome avulso.</p>${clients.length?`<ul>${clients.map(c=>`<li><button type="button" class="text-link" data-action="clients" data-id="${esc(c.id)}">${esc(c.name)}</button> ${esc(c.contact)}</li>`).join('')}</ul>`:''}<form data-form="client" data-id="${esc(client?.id||uid())}" data-command="${uid()}"><label>Nome do cliente<input required maxlength="100" name="name" value="${esc(client?.name)}"></label><label>Contato fictício<input maxlength="120" name="contact" value="${esc(client?.contact)}"></label><div class="dialog-actions"><button class="primary">Salvar cliente</button>${client?'<button type="button" class="secondary" data-action="clients">Novo cliente</button>':''}</div></form>`);
+}
 function newOrder(mode='balcao') {
-  modal(mode==='entrega'?'Novo pedido de entrega':'Nova venda',`<form data-form="new" data-command="${uid()}"><label>Atendimento<select name="mode" id="new-mode"><option value="balcao" ${mode==='balcao'?'selected':''}>Balcão</option><option value="entrega" ${mode==='entrega'?'selected':''}>Entrega</option></select></label><label>Cliente fictício <span class="subtle">(opcional no balcão)</span><input name="customer" maxlength="100" placeholder="Ex.: Cliente de demonstração"></label><label data-delivery>Endereço fictício de entrega<input name="address" maxlength="180" placeholder="Rua Fictícia, 100"></label><label data-delivery>Taxa de entrega (R$)<input name="fee" inputmode="decimal" value="0,00"></label><p class="small-note">Use somente dados fictícios. A entrega é acompanhada manualmente.</p><button class="primary full" type="submit">Abrir pedido</button></form>`);
+  modal(mode==='entrega'?'Novo pedido de entrega':'Nova venda',`<form data-form="new" data-command="${uid()}"><label>Atendimento<select name="mode" id="new-mode"><option value="balcao" ${mode==='balcao'?'selected':''}>Balcão</option><option value="entrega" ${mode==='entrega'?'selected':''}>Entrega</option></select></label><label>Cliente fictício <span class="subtle">(opcional no balcão)</span><select name="clientId" aria-label="Cliente cadastrado"><option value="">Nome avulso</option>${(state.clients||[]).map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('')}</select><input name="customer" maxlength="100" placeholder="Ex.: Cliente de demonstração"></label><label data-delivery>Endereço fictício de entrega<input name="address" maxlength="180" placeholder="Rua Fictícia, 100"></label><label data-delivery>Taxa de entrega (R$)<input name="fee" inputmode="decimal" value="0,00"></label><p class="small-note">Use somente dados fictícios. A entrega é acompanhada manualmente.</p><button class="primary full" type="submit">Abrir pedido</button></form>`);
   syncNewMode();
 }
 function syncNewMode(){const delivery=$('#new-mode')?.value==='entrega';$('#dialog').querySelectorAll('[data-delivery]').forEach(label=>label.hidden=!delivery);}
@@ -289,6 +294,7 @@ document.addEventListener('click',async event=>{
   if(action==='product-edit'||action==='product-new'){productEditor(id);return;}
   if(action==='returnable-type'){returnableTypeModal();return;}
   if(action==='shift'){if(await send(state.shift.status==='open'?'CLOSE_SHIFT':'OPEN_SHIFT'))toast('Turno atualizado.');return;}
+  if(action==='clients'){clientForm(id);return;}
   if(action==='guide'){guide();return;}
   if(action==='guide-create'){
     const product=state.products.find(product=>product.id==='cerveja');
@@ -316,8 +322,9 @@ document.addEventListener('submit',async event=>{
   const data=new FormData(form),get=name=>data.get(name),commandId=form.dataset.command;
   let ok=false;
   try{
+    if(form.dataset.form==='client')ok=await send('SAVE_CLIENT',{clientId:form.dataset.id,name:get('name'),contact:get('contact')});
     if(form.dataset.form==='new'){
-      const orderId=uid();ok=await send('CREATE_ORDER',{orderId,mode:get('mode'),customer:get('customer'),address:get('mode')==='entrega'?get('address'):'',deliveryFeeCents:get('mode')==='entrega'?cents(get('fee')):0},commandId);
+      const orderId=uid();ok=await send('CREATE_ORDER',{orderId,mode:get('mode'),clientId:get('clientId'),customer:get('customer'),address:get('mode')==='entrega'?get('address'):'',deliveryFeeCents:get('mode')==='entrega'?cents(get('fee')):0},commandId);
       if(ok){selectedOrder=orderId;view='order';search='';}
     }
     if(form.dataset.form==='item')ok=await send('ADD_ITEM',{orderId:selectedOrder,productId:form.dataset.product,presentationId:get('presentation'),quantity:Number(get('quantity'))},commandId);

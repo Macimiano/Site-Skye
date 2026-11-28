@@ -19,8 +19,41 @@
 .room-house{width:42px;height:42px;flex:none;border-radius:10px;background:var(--room-bg);color:var(--room-ink);position:relative}
 .room-house::before{content:'';position:absolute;inset:9px;background:currentColor;clip-path:polygon(50% 0,100% 42%,88% 42%,88% 100%,60% 100%,60% 63%,40% 63%,40% 100%,12% 100%,12% 42%,0 42%)}
 .room-chip{color:var(--room-ink);background:var(--room-bg);border-radius:8px;padding:4px 8px;font-size:13px;font-weight:700}
-.room-capacity{display:flex;align-items:center;flex-wrap:wrap;gap:6px 9px}.room-beds{display:inline-flex;color:var(--room-ink);gap:4px}
-.room-beds i{width:16px;height:11px;border-bottom:2px solid;border-left:2px solid;border-radius:2px;position:relative}
-.room-beds i::after{content:'';position:absolute;width:12px;height:5px;right:0;bottom:1px;border-radius:2px 3px 0 0;background:currentColor}
+.room-capacity{display:flex;align-items:center;flex-wrap:wrap;gap:6px 9px}
+
+
 .room-card .hotel-btn{margin-top:auto}
 @media(max-width:460px){.hotel-title .hotel-actions{width:100%}.hotel-title .hotel-actions .main{flex-grow:1}.room-grid{grid-template-columns:repeat(auto-fit,minmax(min(143px,100%),1fr))}.room-card{padding:9px}.room-card .hotel-btn{padding:8px}}
+
+.stay-detail{display:grid;gap:18px;padding:clamp(14px,3vw,24px)}
+.stay-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.stay-header h2,.stay-header p{margin:0;overflow-wrap:anywhere}
+.stay-status{padding:5px 10px;border-radius:8px;background:#e7edf5;color:#244763;font-weight:700}
+.stay-status[data-status="Hospedado"]{background:#dff1e9;color:#215943}
+.stay-status[data-status="Cancelada"]{background:#f9e6df;color:#823d29}
+.stay-detail>section,.stay-actions{border-top:1px solid #d5e0e2;padding-top:16px}
+.stay-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(130px,100%),1fr));gap:8px;margin:0}
+.stay-fields>div{background:#f1f6f7;padding:8px 11px;border-radius:8px;overflow-wrap:anywhere}
+.stay-fields dt{font-size:13px;color:#415b66}.stay-fields dd{margin:2px 0 0;font-weight:600}
+.stay-balance{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;background:#def0ec;color:#153e3c;border-radius:9px;padding:10px 12px;margin:10px 0;font-weight:700}
+.stay-balance strong{font-size:22px}.stay-entries summary{cursor:pointer;padding:8px 0}
+.room-people{display:inline-flex;color:var(--room-ink);gap:4px}
+.room-people i{position:relative;width:10px;height:9px;margin-top:6px;border-radius:5px 5px 2px 2px;background:currentColor}
+.room-people i::before{content:'';position:absolute;width:5px;height:5px;left:2.5px;top:-6px;border-radius:50%;background:currentColor}
+
+.agenda-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:16px;align-items:start}
+.agenda-layout>.hotel-panel{min-width:0;margin:0}
+.calendar-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;margin-bottom:10px}
+.calendar-toolbar h3{margin:0}.calendar-panel h3{text-transform:capitalize}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.calendar-weekday{text-align:center;font-size:12px;color:#526973}
+.calendar-day{font:inherit;min-height:48px;min-width:0;padding:3px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #d5e0e2;border-radius:8px;background:#f4f8f9;color:#163745;cursor:pointer}
+.calendar-day.other-month{background:#fff;color:#546774}.calendar-day[aria-current=date]{border-color:#168571}
+.calendar-day[aria-pressed=true]{background:#103e50;color:white}
+.calendar-day:focus-visible{outline:3px solid #2169ad;outline-offset:1px}
+.calendar-day small{background:#dcece7;color:#184839;font-size:11px;line-height:1.3;padding:0 5px;border-radius:6px}
+.calendar-tools{margin-top:14px}.calendar-tools input{max-width:100%}
+.calendar-availability{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.calendar-availability span{background:#e3f4ec;color:#235442;border-radius:7px;padding:5px 8px;font-size:13px}
+.agenda-row{align-items:flex-start;flex-direction:column}.agenda-row p{margin:2px 0 0}.agenda-row .hotel-actions{margin:0;gap:7px}
+@media(max-width:940px){.agenda-layout{grid-template-columns:1fr}}

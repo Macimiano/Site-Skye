@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b2248">
+  <meta name="description" content="Experimente uma simulação da gestão de lojas da Skye: frente de caixa, estoque, vendas e relatórios para mercadinhos, tabacarias e agropecuárias.">
+  <title>Demo de gestão de lojas | Skye Gestão e Inovação</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="lojas.css">
+  <script defer src="lojas.js"></script>
+
+<!-- Vercel Web Analytics: visualizações de páginas, sem cookies de marketing -->
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Ir para o conteúdo</a>
+  <section class="store-entry" id="segmentGate" aria-labelledby="store-entry-title">
+    <div class="store-entry-container">
+      <div class="store-entry-top"><a href="../demonstracoes/#lojas" aria-label="Voltar às demonstrações da Skye"><img src="../assets/logo-skye-recortada.png" alt="Skye Gestão e Inovação"><span>SKYE · DEMONSTRAÇÃO</span></a><a href="../index.html#demonstracoes">← Voltar ao site</a></div>
+      <span class="store-entry-kicker">ESCOLHA ANTES DE COMEÇAR</span>
+      <h1 id="store-entry-title">Qual tipo de loja você quer conhecer?</h1>
+      <p class="store-entry-description">O sistema carrega um catálogo e uma rotina de exemplo para a versão escolhida. Faça sua escolha para entrar na demonstração.</p>
+      <div class="store-entry-groups">
+        <section class="store-entry-commerce" aria-labelledby="entry-commerce-title"><span class="store-entry-tag">COMÉRCIO E CONVENIÊNCIA</span><h2 id="entry-commerce-title">Mercadinho ou tabacaria</h2><p>Frente de caixa, estoque e vendas com produtos de balcão.</p>
+          <div class="store-entry-options">
+            <button type="button" data-enter-segment="mercadinho"><span>01</span><strong>Mercadinho</strong><small>Mercearia, bebidas e hortifruti</small><b>Entrar nesta versão ↗</b></button>
+            <button type="button" data-enter-segment="tabacaria"><span>02</span><strong>Tabacaria</strong><small>Acessórios e conveniência</small><b>Entrar nesta versão ↗</b></button>
+          </div>
+        </section>
+        <section class="store-entry-agro" aria-labelledby="entry-agro-title"><span class="store-entry-tag">AGROPECUÁRIA</span><h2 id="entry-agro-title">Agropecuária</h2><p>Produtos para animais, jardinagem e itens por peso.</p>
+          <button type="button" data-enter-segment="agropecuaria" class="store-entry-agro-button"><strong>Explorar a versão agropecuária</strong><small>Produtos, estoque, PDV e relatórios</small><b>Entrar nesta versão ↗</b></button>
+        </section>
+      </div>
+      <p class="store-entry-footnote">Todos os dados são fictícios. Nenhuma venda ou cobrança é realizada.</p>
+    </div>
+  </section>
+  <div class="app-layout" hidden>
+    <aside class="sidebar" id="sidebar" aria-label="Menu da demonstração">
+      <a class="brand" href="../index.html" aria-label="Voltar ao site da Skye">
+        <img src="../assets/logo-skye-recortada.png" alt="Skye Gestão e Inovação">
+        <div><strong>GESTÃO DE LOJAS</strong><span>DEMONSTRAÇÃO</span></div>
+      </a>
+      <div class="side-eyebrow">DEMONSTRAÇÃO INTERATIVA</div>
+      <nav class="main-nav" id="nav" aria-label="Áreas da demonstração">
+        <button type="button" data-page="dashboard" class="active"><span class="nav-ic">▦</span>Visão geral</button>
+        <button type="button" data-page="pdv"><span class="nav-ic">▣</span>Frente de caixa</button>
+        <button type="button" data-page="estoque"><span class="nav-ic">▤</span>Produtos e estoque</button>
+        <button type="button" data-page="vendas"><span class="nav-ic">≡</span>Vendas</button>
+        <button type="button" data-page="clientes"><span class="nav-ic">♙</span>Clientes e fidelização</button>
+        <button type="button" data-page="contas"><span class="nav-ic">▤</span>Contas a pagar</button>
+        <button type="button" data-page="relatorios"><span class="nav-ic">▥</span>Relatórios</button>
+      </nav>
+      <div class="nav-limit"><span class="dot"></span><strong>Modo limitado</strong><p>Sem operações reais, configurações, importações ou dados de clientes.</p></div>
+      <div class="side-actions"><a href="../index.html#demonstracoes">← Voltar ao site</a><a href="https://wa.me/5519981588431?text=Ol%C3%A1%21%20Testei%20a%20demonstra%C3%A7%C3%A3o%20de%20gest%C3%A3o%20de%20lojas%20da%20Skye%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener noreferrer">Conversar com a Skye ↗</a></div>
+    </aside>
+    <div class="app-main">
+      <div class="mobile-toplink"><a href="../index.html#demonstracoes">← Voltar ao site da Skye</a><span>DEMO · SKYE</span></div>
+      <div class="demo-strip"><span class="strip-dot"></span><span><strong>Ambiente de demonstração</strong> · Todos os produtos, clientes e valores são fictícios. Nenhuma venda ou pagamento é real.</span><button type="button" id="resetDemoTop" title="Reiniciar os dados fictícios">↻ Reiniciar</button></div>
+      <header class="app-header">
+        <div class="header-left"><div><span class="kicker">MODELO DE GESTÃO DE LOJA</span><h1 id="pageTitle">Visão geral</h1><p id="pageSubtitle">Conheça a rotina de um comércio com dados de exemplo.</p></div></div>
+        <div class="header-right active-version"><div><span class="active-version-caption">VOCÊ ESCOLHEU</span><strong id="activeSegmentLabel">—</strong></div><button type="button" id="changeSegment">Trocar versão ↗</button></div>
+      </header>
+      <main id="main" tabindex="-1"><div id="app" aria-live="polite"></div></main>
+      <footer class="app-footer"><span>Uma amostra baseada no Modelo de Gestão de Loja · Recursos completos dependem do projeto contratado.</span><a href="../index.html#contato">Pedir uma solução para minha loja ↗</a></footer>
+    </div>
+  </div>
+  <dialog id="detailsDialog" class="details-dialog" aria-labelledby="dialogHeading"><div class="dialog-head"><h2 id="dialogHeading">Detalhes da venda</h2><button id="dialogClose" aria-label="Fechar detalhes" type="button">✕</button></div><div id="dialogBody"></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

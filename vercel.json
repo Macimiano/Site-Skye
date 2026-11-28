@@ -2,94 +2,12 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
-      "source": "/demonstracoes/demonstracao-acaiteria",
+      "source": "/demonstracao-acaiteria",
       "destination": "https://macimiano.github.io/skye-demo-gestao-comercial/"
     },
     {
-      "source": "/demonstracoes/demonstracao-acaiteria/:path*",
-      "destination": "https://macimiano.github.io/skye-demo-gestao-comercial/:path*"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/demonstracao-acaiteria/",
-      "destination": "/demonstracoes/demonstracao-acaiteria/",
-      "permanent": false
-    },
-    {
       "source": "/demonstracao-acaiteria/:path*",
-      "destination": "/demonstracoes/demonstracao-acaiteria/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-adega/",
-      "destination": "/demonstracoes/demonstracao-adega/",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-adega/:path*",
-      "destination": "/demonstracoes/demonstracao-adega/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-corte-certo/",
-      "destination": "/demonstracoes/demonstracao-corte-certo/",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-corte-certo/:path*",
-      "destination": "/demonstracoes/demonstracao-corte-certo/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-equipes/",
-      "destination": "/demonstracoes/demonstracao-equipes/",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-equipes/:path*",
-      "destination": "/demonstracoes/demonstracao-equipes/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-hospedagem/",
-      "destination": "/demonstracoes/demonstracao-hospedagem/",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-hospedagem/:path*",
-      "destination": "/demonstracoes/demonstracao-hospedagem/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-lojas/",
-      "destination": "/demonstracoes/demonstracao-lojas/",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-lojas/:path*",
-      "destination": "/demonstracoes/demonstracao-lojas/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-petshop/",
-      "destination": "/demonstracoes/demonstracao-petshop/",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-petshop/:path*",
-      "destination": "/demonstracoes/demonstracao-petshop/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-restaurante/",
-      "destination": "/demonstracoes/demonstracao-restaurante/",
-      "permanent": false
-    },
-    {
-      "source": "/demonstracao-restaurante/:path*",
-      "destination": "/demonstracoes/demonstracao-restaurante/:path*",
-      "permanent": false
+      "destination": "https://macimiano.github.io/skye-demo-gestao-comercial/:path*"
     }
   ]
 }
