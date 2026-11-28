@@ -1,3 +1,7 @@
+## Atualização v6.5 — Retrato de Marcelo
+
+A seção Sobre nós agora usa `assets/equipe/marcelo-sem-natal-v65.webp`, retrato aprovado com fundo neutro. A foto original da Fran (`assets/equipe/fran-selfie-original-v64.jpg`), os previews e as demonstrações foram preservados. Para atualizar na Vercel, envie todo o conteúdo da pasta deste ZIP para o projeto existente.
+
 # Skye v6.4 — retrato original e quatro prévias corrigidas
 
 - Foto da Fran: arquivo **original de câmera** `assets/equipe/fran-selfie-original-v64.jpg`, sem alterações de rosto, fundo ou filtros. O HTML foi atualizado para essa imagem exclusiva; a versão editada foi removida do pacote.

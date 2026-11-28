@@ -7,7 +7,7 @@ const now = () => new Date().toISOString();
 const roundQty = n => Math.round(n * 1000) / 1000;
 const modes = ['salao', 'balcao', 'entrega'];
 const methods = ['pix', 'dinheiro', 'debito', 'credito'];
-const roles = ['gestao', 'caixa', 'cozinha'];
+const roles = ['gestao', 'caixa', 'cozinha', 'garcom'];
 const integer = (n, label, min = 0) => { if (!Number.isSafeInteger(n) || n < min) fail(`${label} inválido.`); return n; };
 const text = (v, max = 500) => String(v ?? '').trim().slice(0, max);
 function required(v, label) { const value = text(v); if (!value) fail(`Informe ${label}.`); return value; }
@@ -163,6 +163,7 @@ export function dispatch(state, command) {
     return state;
   }
   const s = structuredClone(state);
+  if(c.actor==='garcom'&&!['CREATE_ORDER','ADD_ITEM','REMOVE_ITEM','SUBMIT_ORDER','SET_STAGE'].includes(c.type))fail('Ação indisponível no modo Garçom.','FORBIDDEN');
   switch (c.type) {
     case 'SAVE_CLIENT': {
       const name=String(c.name||'').trim(), recordId=String(c.clientId||'').trim();
@@ -175,7 +176,7 @@ export function dispatch(state, command) {
       const client=(s.clients||[]).find(x=>x.id===c.clientId);
       if(c.clientId&&!client)throw new Error('Cliente não encontrado.');
 
-      sales(c); open(s);
+      if(c.actor!=='garcom')sales(c); open(s);
       if (!s.settings.modes.includes(c.mode)) fail('Modo de atendimento desabilitado.');
       const id = required(c.orderId, 'o identificador do pedido');
       if (s.orders.some(o => o.id === id)) fail('Pedido já existente.');
@@ -187,7 +188,7 @@ export function dispatch(state, command) {
       addHistory(s, c, { mode: c.mode }); break;
     }
     case 'ADD_ITEM': {
-      sales(c); open(s); const o = orderFor(s, c);
+      if(c.actor!=='garcom')sales(c); open(s); const o = orderFor(s, c);
       if (o.stage !== 'draft') fail('Somente rascunhos podem receber itens. Crie um pedido complementar.');
       const p = s.products.find(p => p.id === c.productId); if (!p) fail('Produto não encontrado.');
       integer(c.quantity, 'Quantidade', 1); if (c.quantity > 100) fail('Limite de 100 unidades por item.');
@@ -203,18 +204,19 @@ export function dispatch(state, command) {
       addHistory(s, c, { productId: p.id, quantity: c.quantity, itemId }); break;
     }
     case 'REMOVE_ITEM': {
-      sales(c); open(s); const o = orderFor(s, c); if (o.stage !== 'draft') fail('Somente rascunhos permitem remoção.');
+      if(c.actor!=='garcom')sales(c); open(s); const o = orderFor(s, c); if (o.stage !== 'draft') fail('Somente rascunhos permitem remoção.');
       const i = o.items.findIndex(i => i.id === c.itemId); if (i < 0) fail('Item não encontrado.');
       o.items.splice(i, 1); o.discountCents = 0; addHistory(s, c, { itemId: c.itemId }); break;
     }
     case 'SUBMIT_ORDER': {
-      sales(c); open(s); const o = orderFor(s, c);
+      if(c.actor!=='garcom')sales(c); open(s); const o = orderFor(s, c);
       if (o.stage !== 'draft') fail('Pedido já enviado.');
       if (!o.items.length) fail('Adicione ao menos um item.');
       o.stockRequirements = requirements(o); stockMove(s, c, o, 'reserve');
       o.stage = 'received'; o.stockReserved = true; o.submittedAt = now(); addHistory(s, c); break;
     }
     case 'SET_STAGE': {
+      if(c.actor==='garcom'&&c.stage!=='delivered')fail('Garçom pode registrar a entrega de um pedido pronto.','FORBIDDEN');
       open(s); const o = orderFor(s, c);
       const next = { received: 'preparing', preparing: 'ready', ready: 'delivered' }[o.stage];
       if (c.stage !== next) fail('Avance uma etapa por vez: recebido, em preparo, pronto e entregue.');

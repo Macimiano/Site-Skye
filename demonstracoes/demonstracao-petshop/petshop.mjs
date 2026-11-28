@@ -72,9 +72,32 @@ function orderCard(order){
   const pet=petById(order.petId),t=total(order);
   return `<button class="pet-card" data-action="open" data-id="${esc(order.id)}"><div class="pet-card-top"><div><h3>${esc(name(order))}</h3><span class="subtle">#${order.number} · ${order.type==='appointment'?esc(tutorById(pet?.tutorId)?.name||'Tutor fictício'):'Venda independente de agenda'}</span></div>${badge(order)}</div><p>${esc(order.type==='appointment'?order.services.map(service=>service.name).join(' + '):order.products.map(product=>`${product.quantity}× ${product.name}`).join(', ')||'Adicione produtos à venda')}</p>${order.type==='appointment'?`<span class="pet-time">${order.start}–${endTime(order.start,order.durationMinutes)}</span><small class="block subtle">${esc(order.professionalName||professional(order.professionalId)?.name)} · Preparação até ${endTime(order.start,order.durationMinutes+order.bufferMinutes)}</small>`:''}<div class="pet-card-footer"><span>${order.type==='appointment'?date(order.date):'Loja'}<small>${order.type==='appointment'?`${qty(order.durationMinutes)} min + ${qty(order.bufferMinutes)} min de preparação`:'Sem agendamento'}</small></span>${isFinance()?`<strong>${money(t.balanceCents)}<small>${t.refundDueCents?'A devolver '+money(t.refundDueCents):'saldo'}</small></strong>`:icon('pet')}</div></button>`;
 }
+function agendaCalendar(){
+ const first=agendaDate.slice(0,7)+'-01';
+ const monthStart=new Date(first+'T12:00:00Z');
+ const month=new Intl.DateTimeFormat('pt-BR',{month:'long',year:'numeric',timeZone:'UTC'}).format(monthStart);
+ const counts=new Map();
+ for(const order of state.orders){
+  if(order.type!=='appointment'||['cancelled','no_show'].includes(order.stage)||agendaProfessional!=='all'&&order.professionalId!==agendaProfessional)continue;
+  counts.set(order.date,(counts.get(order.date)||0)+1);
+ }
+ const days=Array.from({length:42},(_,i)=>{
+  const d=new Date(monthStart);
+  d.setUTCDate(i+1-monthStart.getUTCDay());
+  return d.toISOString().slice(0,10);
+ });
+ while(days.at(-7).slice(0,7)!==first.slice(0,7))days.splice(-7);
+ return `<section class="panel pet-calendar" aria-label="Calendário de atendimentos">
+ <div class="pet-calendar-head"><button class="secondary" data-action="agenda-month" data-id="-1">Mês anterior</button><h2>${esc(month)}</h2><button class="secondary" data-action="agenda-month" data-id="1">Próximo mês</button></div>
+ <div class="pet-calendar-grid">${['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(d=>`<span>${d}</span>`).join('')}${days.map(d=>{
+  const count=counts.get(d)||0;
+  return `<button type="button" class="${d.slice(0,7)===first.slice(0,7)?'':'other-month'}" data-action="agenda-day" data-id="${d}" aria-pressed="${d===agendaDate}" ${d===state.businessDate?'aria-current="date"':''} aria-label="${date(d)}, ${count} ${count===1?'atendimento':'atendimentos'}"><strong>${Number(d.slice(-2))}</strong>${count?`<small>${count}</small>`:''}</button>`;
+ }).join('')}</div>
+ <button class="text-link" data-action="agenda-day" data-id="${esc(state.businessDate)}">Voltar ao dia de referência</button></section>`;
+}
 function agendaPage(){
   const people=state.professionals.filter(person=>agendaProfessional==='all'||person.id===agendaProfessional);
-  return `<div class="toolbar pet-toolbar"><div class="pet-filters"><label>Dia da agenda<input id="agenda-date" type="date" value="${esc(agendaDate||state.businessDate)}"></label><label>Profissional<select id="agenda-professional"><option value="all">Todos os profissionais</option>${state.professionals.map(person=>`<option value="${esc(person.id)}" ${agendaProfessional===person.id?'selected':''}>${esc(person.name)}</option>`).join('')}</select></label></div>${isFinance()?'<button class="primary" data-action="schedule">Agendar atendimento</button>':''}</div><div class="pet-note">Cada bloco reserva o profissional e os recursos necessários, incluindo o intervalo de preparação. Remarcar revalida a disponibilidade antes de alterar o agendamento.</div><div class="pet-agenda">${people.map(person=>{const orders=state.orders.filter(order=>order.type==='appointment'&&order.date===agendaDate&&order.professionalId===person.id).sort((a,b)=>a.start.localeCompare(b.start));return `<section class="pet-agenda-column"><h2>${esc(person.name)}<span class="badge planned">${person.workStart}–${person.workEnd}</span></h2><p>Intervalos: ${esc((person.breaks||[]).map(interval=>`${interval.start}–${interval.end}`).join(', ')||'Sem intervalo configurado')}</p>${orders.map(orderCard).join('')||'<div class="pet-agenda-empty">Nenhum atendimento neste dia.</div>'}<div class="pet-agenda-free">${state.unavailable.filter(item=>item.date===agendaDate&&item.professionalId===person.id).map(item=>`${item.start}–${item.end}: ${esc(item.reason)}`).join('<br>')||'Confira horários e recursos ao agendar.'}</div></section>`;}).join('')}</div><div class="pet-legend">${['scheduled','confirmed','received','in_service','ready','delivered','cancelled','no_show'].map(stage=>`<span class="badge ${stage}">${stages[stage]}</span>`).join('')}</div>`;
+  return `<div class="toolbar pet-toolbar"><div class="pet-filters"><label>Dia da agenda<input id="agenda-date" type="date" value="${esc(agendaDate||state.businessDate)}"></label><label>Profissional<select id="agenda-professional"><option value="all">Todos os profissionais</option>${state.professionals.map(person=>`<option value="${esc(person.id)}" ${agendaProfessional===person.id?'selected':''}>${esc(person.name)}</option>`).join('')}</select></label></div>${isFinance()?'<button class="primary" data-action="schedule">Agendar atendimento</button>':''}</div>${agendaCalendar()}<h2 class="pet-agenda-day-title">Atendimentos de ${date(agendaDate)}</h2><div class="pet-note">Cada bloco reserva o profissional e os recursos necessários, incluindo o intervalo de preparação. Remarcar revalida a disponibilidade antes de alterar o agendamento.</div><div class="pet-agenda">${people.map(person=>{const orders=state.orders.filter(order=>order.type==='appointment'&&order.date===agendaDate&&order.professionalId===person.id).sort((a,b)=>a.start.localeCompare(b.start));return `<section class="pet-agenda-column"><h2>${esc(person.name)}<span class="badge planned">${person.workStart}–${person.workEnd}</span></h2><p>Intervalos: ${esc((person.breaks||[]).map(interval=>`${interval.start}–${interval.end}`).join(', ')||'Sem intervalo configurado')}</p>${orders.map(orderCard).join('')||'<div class="pet-agenda-empty">Nenhum atendimento neste dia.</div>'}<div class="pet-agenda-free">${state.unavailable.filter(item=>item.date===agendaDate&&item.professionalId===person.id).map(item=>`${item.start}–${item.end}: ${esc(item.reason)}`).join('<br>')||'Confira horários e recursos ao agendar.'}</div></section>`;}).join('')}</div><div class="pet-legend">${['scheduled','confirmed','received','in_service','ready','delivered','cancelled','no_show'].map(stage=>`<span class="badge ${stage}">${stages[stage]}</span>`).join('')}</div>`;
 }
 function petsPage(){
   const pets=state.pets.filter(pet=>`${pet.name} ${pet.species} ${tutorById(pet.tutorId)?.name||''}`.toLowerCase().includes(search.toLowerCase()));
@@ -224,6 +247,12 @@ document.addEventListener('click',async event=>{
   if(action==='unavailable-new'){unavailableForm();return;}
   if(action==='unavailable-remove'){if(await send('REMOVE_UNAVAILABLE',{unavailableId:id}))toast('Indisponibilidade removida.');return;}
   if(action==='shift'){if(await send(state.shift.status==='open'?'CLOSE_SHIFT':'OPEN_SHIFT'))toast('Turno atualizado.');return;}
+  if(action==='agenda-day'){agendaDate=id;render();document.querySelector('.pet-calendar-grid [aria-pressed="true"]')?.focus({preventScroll:true});return;}
+  if(action==='agenda-month'){
+    const [year,month]=agendaDate.split('-').map(Number);
+    agendaDate=new Date(Date.UTC(year,month-1+Number(id),1)).toISOString().slice(0,10);
+    render();document.querySelector('[data-action="agenda-month"][data-id="'+id+'"]')?.focus({preventScroll:true});return;
+  }
   if(action==='guide'){guide();return;}
   if(action==='guide-create'){
     if(!isFinance()){toast('Explore como gestão ou recepção para criar o roteiro.',true);return;}
@@ -284,7 +313,7 @@ document.addEventListener('submit',async event=>{
 
 document.addEventListener('change',event=>{
   if(event.target.id==='role'){role=event.target.value;render();}
-  if(event.target.id==='agenda-date'){agendaDate=event.target.value;render();}
+  if(event.target.id==='agenda-date'&&event.target.value){agendaDate=event.target.value;render();}
   if(event.target.id==='agenda-professional'){agendaProfessional=event.target.value;render();}
   const form=event.target.closest('[data-form="schedule"]');
   if(form){
