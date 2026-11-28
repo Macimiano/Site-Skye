@@ -1,12 +1,12 @@
 (()=>{'use strict';
 const demos={
-restaurante:{"label":"Restaurante e lanchonete","caption":"Mesas, cozinha e pagamentos parciais","title":"Restaurante e lanchonete · demonstração","url":"../demonstracao-restaurante/index.html"},
-adega:{"label":"Adega e loja de bebidas","caption":"Embalagens, estoque e retornáveis","title":"Adega e loja de bebidas · demonstração","url":"../demonstracao-adega/index.html"},
-petshop:{"label":"Pet shop","caption":"Loja, agenda de banho e tosa e conta por pet","title":"Pet shop · demonstração","url":"../demonstracao-petshop/index.html"},
-hospedagem:{"label":"Hotel e pousada","caption":"Reservas, limpeza e conta da estadia. Canais simulados","title":"Hotel e pousada · demonstração","url":"../demonstracao-hospedagem/index.html"},
- acaiteria:{label:'Açaíteria modelo',caption:'Pedidos e personalização de produtos',url:'../demonstracao-acaiteria/',title:'Demonstração de açaíteria com dados fictícios'},
- equipes:{label:'Equipe de vendas',caption:'Carteira, rotas, visitas, cotações, recuperação e desempenho',url:'../demonstracao-equipes/',title:'Demonstração limitada de equipe de vendas com dados fictícios'},
- 'corte-certo':{label:'Corte Certo · Distribuidoras',caption:'Clientes, cotações, pedidos e estoque por lotes · dados fictícios',url:'../demonstracao-corte-certo/sistema.html',fullscreen:'../demonstracao-corte-certo/',title:'Corte Certo: demonstração limitada para distribuidoras com dados fictícios'}
+restaurante:{"label":"Restaurante e lanchonete","caption":"Mesas, cozinha e pagamentos parciais","title":"Restaurante e lanchonete · demonstração","url":"demonstracao-restaurante/index.html"},
+adega:{"label":"Adega e loja de bebidas","caption":"Embalagens, estoque e retornáveis","title":"Adega e loja de bebidas · demonstração","url":"demonstracao-adega/index.html"},
+petshop:{"label":"Pet shop","caption":"Loja, agenda de banho e tosa e conta por pet","title":"Pet shop · demonstração","url":"demonstracao-petshop/index.html"},
+hospedagem:{"label":"Hotel e pousada","caption":"Reservas, limpeza e conta da estadia. Canais simulados","title":"Hotel e pousada · demonstração","url":"demonstracao-hospedagem/index.html"},
+ acaiteria:{label:'Açaíteria modelo',caption:'Pedidos e personalização de produtos',url:'demonstracao-acaiteria/',title:'Demonstração de açaíteria com dados fictícios'},
+ equipes:{label:'Equipe de vendas',caption:'Carteira, rotas, visitas, cotações, recuperação e desempenho',url:'demonstracao-equipes/',title:'Demonstração limitada de equipe de vendas com dados fictícios'},
+ 'corte-certo':{label:'Corte Certo · Distribuidoras',caption:'Clientes, cotações, pedidos e estoque por lotes · dados fictícios',url:'demonstracao-corte-certo/sistema.html',fullscreen:'demonstracao-corte-certo/',title:'Corte Certo: demonstração limitada para distribuidoras com dados fictícios'}
 };
 const shopLabels={mercadinho:'Mercadinho',tabacaria:'Tabacaria',agropecuaria:'Agropecuária'};
 const frame=document.getElementById('hub-iframe'),loader=document.getElementById('hub-loader');
@@ -37,7 +37,7 @@ function chooseShopSegment(which){
  shopPicker.hidden=true;demoFrame.hidden=false;changeVersion.hidden=false;
  label.textContent='Gestão de lojas · '+shopLabels[which];
  caption.textContent='Catálogo próprio para esta versão · dados fictícios';
- const url='../demonstracao-lojas/?tipo='+encodeURIComponent(which);
+ const url='demonstracao-lojas/?tipo='+encodeURIComponent(which);
  fullscreen.href=url;frame.title='Demonstração de '+shopLabels[which]+' com dados fictícios';
  loader.hidden=false;frame.src=url;changeHash('lojas');
 }
@@ -55,7 +55,7 @@ window.addEventListener('message',event=>{
  if(event.data?.type==='skye-shop-segment'&&Object.prototype.hasOwnProperty.call(shopLabels,event.data.segment)){
   currentSegment=event.data.segment;
   label.textContent='Gestão de lojas · '+shopLabels[currentSegment];
-  fullscreen.href='../demonstracao-lojas/?tipo='+encodeURIComponent(currentSegment);
+  fullscreen.href='demonstracao-lojas/?tipo='+encodeURIComponent(currentSegment);
  }
 });
 openDemo(location.hash.slice(1));
