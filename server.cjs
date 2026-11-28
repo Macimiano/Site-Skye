@@ -27,13 +27,18 @@ http.createServer((req, res) => {
   try { pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
   catch { res.writeHead(400); return res.end(); }
   if (pathname === '/') pathname = '/index.html';
-  if (pathname === '/demonstracao-acaiteria' || pathname === '/demonstracao-acaiteria/') pathname = '/demonstracao-acaiteria/index.html';
-  // Only allow public static routes; keep configuration and server sources private.
-  if (/^\/demonstracao-(restaurante|adega|petshop|hospedagem)\/?$/.test(pathname)) pathname = pathname.replace(/\/?$/, "/index.html");
-  const pilotFile = /^\/demonstracao-(restaurante|adega|petshop|hospedagem)\/(?:index\.html|[a-z]+\.(?:css|mjs)|src\/[a-z-]+\.mjs|assets\/(?:logo-skye\.png|favicon\.svg))$/.test(pathname);
+  if (/^\/demonstracao-(acaiteria|adega|corte-certo|equipes|hospedagem|lojas|petshop|restaurante)(?:\/|$)/.test(pathname)) {
+    const query = new URL(req.url, 'http://localhost').search;
+    res.writeHead(307, { Location: '/demonstracoes' + encodeURI(pathname) + query }); return res.end();
+  }
+  if (/^\/demonstracoes\/demonstracao-(acaiteria|adega|corte-certo|equipes|hospedagem|lojas|petshop|restaurante)\/?$/.test(pathname)) {
+    if (!pathname.endsWith('/')) { res.writeHead(307, { Location: encodeURI(pathname) + '/' + new URL(req.url, 'http://localhost').search }); return res.end(); }
+    pathname += 'index.html';
+  }
+  const pilotFile = /^\/demonstracoes\/demonstracao-(acaiteria|adega|corte-certo|equipes|hospedagem|lojas|petshop|restaurante)\/(?:[\w-]+\.(?:html|css|js|mjs)|src\/[\w-]+\.mjs|assets\/[\w./-]+)$/.test(pathname);
   if (pathname === "/demonstracoes" || pathname === "/demonstracoes/") pathname = "/demonstracoes/index.html";
   const hubFile = ["/demonstracoes/index.html", "/demonstracoes/hub.css", "/demonstracoes/hub.js"].includes(pathname);
-  if (!pilotFile && !hubFile && !/^\/(?:index\.html|privacidade\.html|demo\.html|styles\.css|script\.js|config\.js|demo\.css|demo\.js|ambient\.css|ambient\.js|assets\/[a-zA-Z0-9_./\-]+|demonstracao-acaiteria\/(?:index\.html|style\.css|config\.js|app\.js))$/.test(pathname)) {
+  if (!pilotFile && !hubFile && !/^\/(?:index\.html|privacidade\.html|demo\.html|styles\.css|script\.js|config\.js|demo\.css|demo\.js|ambient\.css|ambient\.js|assets\/[a-zA-Z0-9_./\-]+)$/.test(pathname)) {
     res.writeHead(404); return res.end('Não encontrado');
   }
   const file = path.resolve(root, '.' + pathname);

@@ -1,0 +1,17 @@
+ATUALIZACAO PONTUAL — SKYE
+=========================
+Este pacote altera APENAS as quatro imagens da vitrine, preservando o resto do site,
+inclusive arquivos e demonstracoes adicionadas depois da versao v6.2.
+
+1. Extraia o ZIP.
+2. Tenha uma copia da pasta atual completa do seu site no computador.
+3. Abra um terminal na pasta extraida deste ZIP.
+4. Execute: python3 aplicar_previews.py "CAMINHO_DA_PASTA_DO_SITE"
+5. Confira os quatro cartoes antes de subir os arquivos atualizados na Vercel.
+
+As imagens sao previas ILUSTRATIVAS, montadas com dados ficticios baseados nas
+respectivas demonstracoes, NAO sao capturas de sistemas reais de clientes.
+
+O script preserva os links existentes de cada demonstracao e nao os substitui.
+Se seu objetivo for usar capturas literais das quatro experiencias ja publicadas,
+sera necessario captura-las dessas paginas ou fornecer os arquivos do site atual.

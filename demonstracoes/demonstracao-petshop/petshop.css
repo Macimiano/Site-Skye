@@ -4,3 +4,24 @@
 @media(max-width:1250px){.pet-order-layout{grid-template-columns:minmax(0,1fr) 310px;gap:18px}.pet-order-grid,.pet-people-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pet-day-grid{grid-template-columns:1fr}.pet-stats{gap:12px}.pet-stats article{padding:17px}.pet-products{grid-template-columns:1fr}}
 @media(max-width:960px){.pet-app .sidebar .nav-label-desktop,.pet-app .sidebar .nav-label-mobile{display:none}.pet-agenda{grid-template-columns:1fr}.pet-home-heading{align-items:flex-start}.pet-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pet-profile-grid{grid-template-columns:1fr}.pet-order-meta{grid-template-columns:1fr 1fr}.pet-cash-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pet-resource-list{grid-template-columns:1fr}.pet-order-layout{grid-template-columns:minmax(0,1fr) 300px}}
 @media(max-width:730px){.pet-app .app-header{align-items:flex-start}.pet-app .app-header h1{font-size:23px}.pet-app .app-header .eyebrow{font-size:10px;max-width:150px}.pet-app .demo-bar,.pet-app .demo-bar button{font-size:11px}.pet-notice-actions{gap:10px}.pet-notice-actions a{font-size:11px}.pet-date{font-size:12px}.pet-app .nav-item{padding:8px 12px;min-width:76px}.pet-app .sidebar .nav-label-desktop{display:none!important}.pet-app .sidebar .nav-label-mobile{display:block;font-size:12px}.pet-app .role-select select{font-size:14px}.pet-home-heading{flex-direction:column;gap:15px}.pet-home-heading h2{font-size:24px}.pet-home-heading p{font-size:15px}.pet-actions{gap:9px}.pet-actions .primary,.pet-actions .secondary{padding:11px 13px}.pet-order-grid,.pet-people-grid{grid-template-columns:1fr}.pet-stats article{padding:17px}.pet-stats span{font-size:13px}.pet-stats strong{font-size:26px}.pet-order-layout{grid-template-columns:1fr}.pet-order-layout .order-summary{position:static;order:0}.pet-order-meta{grid-template-columns:1fr 1fr;gap:16px}.pet-order-meta dd{font-size:14px}.pet-products{grid-template-columns:repeat(2,minmax(0,1fr))}.pet-product{padding:16px 13px}.pet-product h3{font-size:16px}.pet-product p{font-size:13px}.pet-product .badge{font-size:11px}.pet-card h3{font-size:17px}.pet-app .order-topline{flex-wrap:wrap}.pet-app .order-topline>span{justify-content:flex-start;text-align:left}.pet-cash-grid{grid-template-columns:1fr}.pet-history-event>div{flex-direction:column;gap:5px}.pet-filters{width:100%}.pet-filters label{flex:1;min-width:125px}.pet-filters select,.pet-filters input{min-width:0;width:100%}.pet-app .dialog-heading h2{font-size:21px}.pet-service-choice{padding:12px}.pet-service-choice strong{font-size:14px}.pet-form-total{font-size:14px}.pet-steps span{font-size:11px}.pet-agenda-column{padding:16px}.pet-app .header-controls .primary{max-width:115px}}
+
+.demo-bar{flex-wrap:wrap;gap:6px 14px}
+.demo-bar button,.demo-bar a{display:inline-flex;align-items:center;min-height:44px;padding:0 5px}
+.wine-notice-actions,.pet-notice-actions{flex-wrap:wrap;gap:4px 12px}
+:where(.primary,.secondary,.table-card,.nav-item,.demo-bar a,.demo-bar button):focus-visible{outline:3px solid #155ac0;outline-offset:2px}
+.vitrine-intro{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px;padding:clamp(16px,3vw,28px);border:1px solid var(--line);border-radius:16px}
+.wine-home-heading.vitrine-intro{background:#f5edf7}.pet-home-heading.vitrine-intro{background:#e9f6f2}
+.vitrine-intro>button{white-space:normal;min-height:44px}
+.vitrine-art{position:relative;display:inline-grid;place-items:center;width:62px;height:62px;flex:none;border-radius:16px}
+.vitrine-art.garrafas{background:#ead9ee;color:#69387e}
+.garrafas i{width:13px;height:30px;border-radius:5px;background:linear-gradient(currentColor 40%,#fff 41% 68%,currentColor 69%);position:relative;box-shadow:-16px 6px #9d72af,16px 6px #9d72af}
+.garrafas i::before{content:'';position:absolute;width:6px;height:9px;top:-7px;left:4px;border-radius:2px;background:currentColor;box-shadow:-16px 6px #9d72af,16px 6px #9d72af}
+.vitrine-art.pata{background:#d4eee5;color:#25765d}
+.pata i{width:27px;height:20px;border-radius:56% 56% 44% 44%;background:currentColor;margin-top:18px;position:relative}
+.pata i::before{content:'';position:absolute;width:8px;height:10px;border-radius:50%;background:currentColor;top:-9px;left:-4px;box-shadow:9px -8px,20px -8px,29px 0}
+.table-card .mesa{width:40px;height:40px;border-radius:10px;background:#e7f4ec;color:#23764b}
+.table-card.occupied .mesa{background:#dce9fe;color:#235dab}
+.mesa i{width:17px;height:17px;background:currentColor;border-radius:50%;box-shadow:0 12px 0 -5px,0 -12px 0 -5px,12px 0 0 -5px,-12px 0 0 -5px}
+.table-grid .table-card>div{flex-wrap:wrap;justify-content:flex-start;gap:6px}
+@media(max-width:760px){.vitrine-intro{grid-template-columns:auto minmax(0,1fr)}.vitrine-intro>button{grid-column:1/-1;justify-self:start}}
+@media(max-width:380px){.table-grid{gap:8px}.table-grid .table-card{padding:10px}.table-grid .table-card .badge{white-space:normal}}
