@@ -12,8 +12,18 @@
   ],
   "redirects": [
     {
+      "source": "/demonstracao-acaiteria/",
+      "destination": "/demonstracoes/demonstracao-acaiteria/",
+      "permanent": false
+    },
+    {
       "source": "/demonstracao-acaiteria/:path*",
       "destination": "/demonstracoes/demonstracao-acaiteria/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/demonstracao-adega/",
+      "destination": "/demonstracoes/demonstracao-adega/",
       "permanent": false
     },
     {
@@ -22,8 +32,18 @@
       "permanent": false
     },
     {
+      "source": "/demonstracao-corte-certo/",
+      "destination": "/demonstracoes/demonstracao-corte-certo/",
+      "permanent": false
+    },
+    {
       "source": "/demonstracao-corte-certo/:path*",
       "destination": "/demonstracoes/demonstracao-corte-certo/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/demonstracao-equipes/",
+      "destination": "/demonstracoes/demonstracao-equipes/",
       "permanent": false
     },
     {
@@ -32,8 +52,18 @@
       "permanent": false
     },
     {
+      "source": "/demonstracao-hospedagem/",
+      "destination": "/demonstracoes/demonstracao-hospedagem/",
+      "permanent": false
+    },
+    {
       "source": "/demonstracao-hospedagem/:path*",
       "destination": "/demonstracoes/demonstracao-hospedagem/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/demonstracao-lojas/",
+      "destination": "/demonstracoes/demonstracao-lojas/",
       "permanent": false
     },
     {
@@ -42,8 +72,18 @@
       "permanent": false
     },
     {
+      "source": "/demonstracao-petshop/",
+      "destination": "/demonstracoes/demonstracao-petshop/",
+      "permanent": false
+    },
+    {
       "source": "/demonstracao-petshop/:path*",
       "destination": "/demonstracoes/demonstracao-petshop/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/demonstracao-restaurante/",
+      "destination": "/demonstracoes/demonstracao-restaurante/",
       "permanent": false
     },
     {
