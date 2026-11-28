@@ -127,3 +127,21 @@ O arquivo `demonstracao-corte-certo/sistema.html` mantém seu CSP e sandbox de s
 - Vídeo do topo substituído pela versão legendada enviada pelo cliente.
 - O player mantém a proporção completa 1280×696, sem zoom ou corte, para preservar as legendas incorporadas na parte inferior.
 - Autoplay sem som, áudio opcional, pausa e tela cheia preservados.
+
+
+## v6.1 — Nossa historia
+
+Seção **Sobre nós** atualizada com as informações fornecidas pelos responsáveis da Skye.
+
+- Marcelo: formado em Administração, visão estratégica, tecnologia, automação e IA para simplificar processos.
+- Fran: marketing e vendas, seis anos de experiência comercial, escuta do cliente e divulgação da marca.
+- Sem inventar histórico de fundação, cargos legais ou projetos não informados.
+- Mantidos o layout responsivo, o tema automático e as demais funcionalidades da v6.0.
+
+
+## v6.2 — Fotos na seção Sobre nós
+
+- Cartões de Marcelo e Fran agora exibem retratos fornecidos/aprovados pelo proprietário da Skye, otimizados para WebP.
+- As fotos são carregadas apenas ao aproximar a seção (lazy loading) e recebem descrições acessíveis.
+- Mantidas a história, o tema automático, as demonstrações, o vídeo, o Analytics e o WhatsApp.
+- A publicação exige atualizar o projeto Vercel existente, mantendo `vercel.json` na raiz.
